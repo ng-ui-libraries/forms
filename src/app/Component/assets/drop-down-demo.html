@@ -1,8 +1,11 @@
-<form #testForm="ngForm" novalidate>
-    <check-box [(ngModel)]="model.required" name="required" label="Is Required" labelPlacement="after"></check-box>
-    <check-box [(ngModel)]="model.isMultiple" name="isMultiple" label="Is Multiple" labelPlacement="after"></check-box>
-    <text-box name="icon" label="Icon" [(ngModel)]="model.icon"></text-box>
-    <div class="card card-body bg-light">
+<h4>Drop Down (Select)</h4>
+<h5>Example</h5>
+<div class="card card-body bg-light form-group">
+    <form #testForm="ngForm" novalidate>
+        <check-box [(ngModel)]="model.required" name="required" label="Is Required" labelPlacement="after"></check-box>
+        <check-box [(ngModel)]="model.isMultiple" name="isMultiple" label="Is Multiple"
+                   labelPlacement="after"></check-box>
+        <text-box name="icon" label="Icon" [(ngModel)]="model.icon"></text-box>
         <drop-down
                 [options]="model.options"
                 [selectBy]="'id'"
@@ -18,26 +21,10 @@
                 {{item.id}} - {{ item.text }}
             </ng-template>
         </drop-down>
-    </div>
-    <submit-button label="Submit" [formGroup]="testForm.form"></submit-button>
-</form>
-<ul class="nav nav-tabs">
-    <li class="nav-item">
-        <a class="nav-link active" data-toggle="tab" href="#select-markup" role="tab">
-            HTML
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#select-data" role="tab">
-            Data
-        </a>
-    </li>
-</ul>
-<div class="tab-content card">
-    <div class="tab-pane active" id="select-markup" role="tabpanel">
-        <pre class="card card-body bg-light">{{ markup }}</pre>
-    </div>
-    <div class="tab-pane" id="select-data" role="tabpanel">
-        <pre class="card card-body bg-light">{{ model | json }}</pre>
-    </div>
+        <submit-button label="Submit" [formGroup]="testForm.form"></submit-button>
+    </form>
 </div>
+<h5>Data Model</h5>
+<pre class="card card-body bg-light">{{ model | json }}</pre>
+<h5>Markup</h5>
+<pre class="card card-body bg-light">{{ markup }}</pre>

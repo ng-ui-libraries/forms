@@ -25,6 +25,7 @@
 
 @mixin form-theme($button-color, $text-color) {
     .btn-primary,
+    .nav-pills .nav-link.active,
     .bs-datepicker-head,
     .bs-datepicker-body .selected,
     .bs-datepicker-head button {

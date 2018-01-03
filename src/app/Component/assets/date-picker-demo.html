@@ -1,46 +1,31 @@
-<form #testForm="ngForm">
-    <check-box [(ngModel)]="model.required" name="required" label="Is Required" labelPlacement="after" ></check-box>
-    <date-picker
-            name="minDate"
-            label="Minimum Date"
-            [(ngModel)]="model.minDate"></date-picker>
-    <date-picker
-            name="maxDate"
-            label="Maximum Date"
-            [(ngModel)]="model.maxDate"></date-picker>
-    <div class="card card-body bg-light">
+<h4>Date Picker</h4>
+<h5>Example</h5>
+<div class="card card-body bg-light form-group">
+    <form #testForm="ngForm">
+        <check-box [(ngModel)]="model.required" name="required" label="Is Required" labelPlacement="after"></check-box>
         <date-picker
-             name="testDatepicker"
-             label="Test Date Picker"
-             [(ngModel)]="model.value"
-             [required]="model.required"
-             [minDate]="model.minDate"
-             [maxDate]="model.maxDate"></date-picker>
-    </div>
-    <submit-button label="Submit" [formGroup]="testForm.form"></submit-button>
-</form>
+                name="minDate"
+                label="Minimum Date"
+                [(ngModel)]="model.minDate"></date-picker>
+        <date-picker
+                name="maxDate"
+                label="Maximum Date"
+                [(ngModel)]="model.maxDate"></date-picker>
+        <date-picker
+                name="testDatepicker"
+                label="Test Date Picker"
+                [(ngModel)]="model.value"
+                [required]="model.required"
+                [minDate]="model.minDate"
+                [maxDate]="model.maxDate"></date-picker>
+        <submit-button label="Submit" [formGroup]="testForm.form"></submit-button>
+    </form>
+</div>
 <div class="alert alert-info">
     Please include the following css file for the date picker styles.
     <pre class="card card-body bg-light">/node_modules/ngx-bootstrap/datepicker/bs-datepicker.css</pre>
 </div>
-<ul class="nav nav-tabs">
-    <li class="nav-item">
-        <a class="nav-link active" data-toggle="tab" href="#date-picker-markup" role="tab">
-            HTML
-        </a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#date-picker-data" role="tab">
-            Data
-        </a>
-    </li>
-</ul>
-<div class="tab-content card">
-    <div class="tab-pane active" id="date-picker-markup" role="tabpanel">
-        <pre class="card card-body bg-light">{{ markup }}</pre>
-    </div>
-    <div class="tab-pane" id="date-picker-data" role="tabpanel">
-        <pre class="card card-body bg-light">{{ model | json }}</pre>
-    </div>
-</div>
+<h5>Data Model</h5>
+<pre class="card card-body bg-light">{{ model | json }}</pre>
+<h5>Markup</h5>
+<pre class="card card-body bg-light">{{ markup }}</pre>

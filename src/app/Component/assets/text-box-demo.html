@@ -1,11 +1,13 @@
-<form #testForm="ngForm">
-    <check-box [(ngModel)]="model.required" name="required" label="Is Required" labelPlacement="after"></check-box>
-    <check-box name="shouldMatch" label="Should Match Matching Field" [(ngModel)]="model.shouldMatch"
-               labelPlacement="after"></check-box>
-    <text-box name="match" label="Matching Field" [(ngModel)]="model.match"></text-box>
-    <text-box name="icon" label="Icon" [(ngModel)]="model.icon"></text-box>
-    <div class="clearfix"></div>
-    <div class="card card-body bg-light">
+<h4>Text Box</h4>
+<h5>Example</h5>
+<div class="card card-body bg-light form-group">
+    <form #testForm="ngForm">
+        <check-box [(ngModel)]="model.required" name="required" label="Is Required" labelPlacement="after"></check-box>
+        <check-box name="shouldMatch" label="Should Match Matching Field" [(ngModel)]="model.shouldMatch"
+                   labelPlacement="after"></check-box>
+        <text-box name="match" label="Matching Field" [(ngModel)]="model.match"></text-box>
+        <text-box name="icon" label="Icon" [(ngModel)]="model.icon"></text-box>
+        <div class="clearfix"></div>
         <text-box
                 [name]="model.name"
                 label="Test Text Field"
@@ -19,27 +21,10 @@
                 </span>
             </div>
         </text-box>
-    </div>
-    <submit-button label="Submit" [formGroup]="testForm.form"></submit-button>
-</form>
-<ul class="nav nav-tabs">
-    <li class="nav-item">
-        <a class="nav-link active" data-toggle="tab" href="#email-markup" role="tab">
-            HTML
-        </a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#email-data" role="tab">
-            Data
-        </a>
-    </li>
-</ul>
-<div class="tab-content card">
-    <div class="tab-pane active" id="email-markup" role="tabpanel">
-        <pre class="card card-body bg-light">{{ markup }}</pre>
-    </div>
-    <div class="tab-pane" id="email-data" role="tabpanel">
-        <pre class="card card-body bg-light">{{ model | json }}</pre>
-    </div>
+        <submit-button label="Submit" [formGroup]="testForm.form"></submit-button>
+    </form>
 </div>
+<h5>Data Model</h5>
+<pre class="card card-body bg-light">{{ model | json }}</pre>
+<h5>Markup</h5>
+<pre class="card card-body bg-light">{{ markup }}</pre>

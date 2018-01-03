@@ -1,12 +1,12 @@
 import {Component, ViewEncapsulation} from "@angular/core";
 
 @Component({
-    selector     : 'app',
+    selector     : 'forms-demo',
     encapsulation: ViewEncapsulation.None,
     templateUrl  : 'assets/demo.html',
     styleUrls    : ['../../../public/demo-styles.scss']
 })
-export class DemoComponent {
+export class FormsDemoComponent {
 
     constructor() {
 

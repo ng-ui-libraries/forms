@@ -1,103 +1,57 @@
 <style>
-    .nav-tabs {
-        width: 100%;
-    }
-
     pre {
         overflow-x: auto;
         width: 100%;
     }
+    @media (min-width:768px) {
+        .navbar-brand {
+            width: 100%;
+        }
+    }
+    h4, h5 {
+        border-bottom: 1px solid #ccc;
+        margin-bottom: 20px;
+    }
 </style>
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
-            <h3>Form Components</h3>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <ul class="nav nav-tabs ">
-                <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#text-inputs" role="tab">Text Inputs</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#selection" role="tab">Selection</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#checkbox" role="tab">Check Box</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#radio" role="tab">Radio Group</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#nested-list" role="tab">Nested List</a>
-                </li>
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane active" id="text-inputs" role="tabpanel">
-                    <div class="row">
-                        <div class="col-12">
-                            <ul class="nav nav-tabs ">
-                                <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="tab" href="#text" role="tab">Text Box</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#email" role="tab">Email Address</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#datepicker" role="tab">Date Picker</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content">
-                                <div class="tab-pane active" id="text" role="tabpanel">
-                                    <div class="text-box-demo"></div>
-                                </div>
-                                <div class="tab-pane" id="email" role="tabpanel">
-                                    <div class="email-demo"></div>
-                                </div>
-                                <div class="tab-pane" id="datepicker" role="tabpanel">
-                                    <div class="date-picker-demo"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <div class="row flex-xl-nowrap">
+        <div class="col-12 col-md-3 col-xl-2 nav-sidebar bg-light">
+            <nav class="navbar navbar-expand-md navbar-light flex-md-column">
+                <a class="navbar-brand" routerLink="/forms" routerLinkActive="active">Forms</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-                <div class="tab-pane" id="selection" role="tabpanel">
-                    <div class="row">
-                        <div class="col-12">
-                            <ul class="nav nav-tabs ">
-                                <li class="nav-item ">
-                                    <a class="nav-link active" data-toggle="tab" href="#drop-down" role="tab">Drop
-                                        Down</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#nested-check-box" role="tab">Nested
-                                        Check
-                                        Box</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content">
-                                <div class="tab-pane active" id="drop-down" role="tabpanel">
-                                    <div class="drop-down-demo"></div>
-                                </div>
-                                <div class="tab-pane" id="nested-check-box" role="tabpanel">
-                                    <div class="nested-check-box-demo"></div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <div class="navbar-nav flex-column">
+                        <div class="nav-brand">Components</div>
+                        <a class="nav-link" routerLink="/forms/check-box" routerLinkActive="active">Check Box</a>
+                        <a class="nav-link" routerLink="/forms/nested-check-box" routerLinkActive="active">
+                            Nested Check Box
+                        </a>
+                        <a class="nav-link" routerLink="/forms/radio" routerLinkActive="active">Radio Buttons</a>
+                        <a class="nav-link" routerLink="/forms/text-box" routerLinkActive="active">Text Box</a>
+                        <a class="nav-link" routerLink="/forms/email" routerLinkActive="active">Email Address</a>
+                        <a class="nav-link" routerLink="/forms/date-picker" routerLinkActive="active">Date Picker</a>
+                        <a class="nav-link" routerLink="/forms/drop-down" routerLinkActive="active">
+                            Drop Down (Select)
+                        </a>
+                        <div class="nav-brand">&nbsp;</div>
+                        <div class="nav-brand">Validation</div>
+                        <a class="nav-link" routerLink="/forms/match-value" routerLinkActive="active">
+                            Match Value (Confirmation)
+                        </a>
                     </div>
                 </div>
-                <div class="tab-pane" id="checkbox" role="tabpanel">
-                    <div class="checkbox-demo"></div>
-                </div>
-                <div class="tab-pane" id="radio" role="tabpanel">
-                    <div class="radio-demo"></div>
-                </div>
-                <div class="tab-pane" id="nested-list" role="tabpanel">
-                    <div class="nested-list-demo"></div>
+            </nav>
+        </div>
+        <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 nav-content">
+            <div class="tab-content">
+                <div class="tab-pane active" role="tabpanel">
+                    <router-outlet></router-outlet>
                 </div>
             </div>
-        </div>
+        </main>
     </div>
 </div>

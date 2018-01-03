@@ -1,0 +1,24 @@
+<h4>Match Value (Confirmation)</h4>
+<h5>Example</h5>
+<div class="card card-body bg-light form-group">
+    <form #testForm="ngForm">
+        <text-box
+                name="testConfirm"
+                [label]="model.label"
+                placeholder="provide a value ..."
+                [(ngModel)]="model.value"
+                required="true"></text-box>
+        <text-box
+                name="testConfirmValue"
+                label="Confirm 'Match This Value'"
+                [(ngModel)]="model.match"
+                required="true"
+                [matchValue]="{label: model.label, value: model.value}"
+                placeholder="match the previous value ..."></text-box>
+        <submit-button label="Submit" [formGroup]="testForm.form"></submit-button>
+    </form>
+</div>
+<h5>Data Model</h5>
+<pre class="card card-body bg-light">{{ model | json }}</pre>
+<h5>Markup</h5>
+<pre class="card card-body bg-light">{{ markup }}</pre>
