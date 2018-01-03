@@ -1,0 +1,63 @@
+@import "./field.scss";
+
+nested-check-box {
+    nested-list .form-control.expandable {
+        padding: 5px 10px 5px 20px;
+        resize: vertical;
+        > .parent-node {
+            display: none;
+        }
+        .parent-node {
+            padding: 0;
+        }
+    }
+    .expandable {
+        .form-control, .form-group {
+            margin-bottom: 0;
+        }
+        check-box {
+            .form-group.no-validate-input {
+                .form-control, .input-group-prepend, .input-group-append, .input-group, .input-group-text {
+                    padding: 2px 4px;
+                    height: auto;
+                    border: none;
+                    background-color: inherit;
+                    box-shadow: none;
+                    &:first-child, &:last-child {
+                        border-left: none;
+                        border-right: none;
+                    }
+                    label {
+                        font-weight: normal;
+                        line-height: 28px;
+                    }
+                }
+            }
+        }
+        .bold .form-control label {
+            font-weight: bold !important;
+        }
+    }
+    .bold {
+        font-weight: bold;
+    }
+    .form-check {
+        margin-bottom: 0;
+        .form-check-label {
+            user-select: none;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-left: 20px;
+            &:hover {
+                background-color: #efefef;
+            }
+            .form-check-input {
+                margin-top: 0;
+            }
+        }
+
+    }
+}

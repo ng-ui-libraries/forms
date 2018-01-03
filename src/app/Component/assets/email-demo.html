@@ -1,0 +1,33 @@
+<form #testForm="ngForm">
+    <check-box [(ngModel)]="model.required" name="required" label="Is Required" labelPlacement="after"></check-box>
+    <div class="card card-body bg-light">
+        <email
+                [name]="model.name"
+                label="Email Address"
+                [(ngModel)]="model.value"
+                [parentFormGroup]="testForm.form"
+                [required]="model.required"
+                [placeholder]="model.placeholder"></email>
+    </div>
+    <submit-button label="Submit" [formGroup]="testForm.form"></submit-button>
+</form>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#email-markup" role="tab">
+            HTML
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#email-data" role="tab">
+            Data
+        </a>
+    </li>
+</ul>
+<div class="tab-content card">
+    <div class="tab-pane active" id="email-markup" role="tabpanel">
+        <pre class="card card-body bg-light">{{ markup }}</pre>
+    </div>
+    <div class="tab-pane" id="email-data" role="tabpanel">
+        <pre class="card card-body bg-light">{{ model | json }}</pre>
+    </div>
+</div>

@@ -1,0 +1,142 @@
+check-box, nested-list, nested-check-box, date-picker, email {
+    display: block;
+    position: relative;
+}
+
+.form-group {
+    .form-control.no-select {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    .alert-danger ul {
+        margin-bottom: 0;
+    }
+    .form-control {
+        width: auto;
+    }
+    .input-group {
+        width: auto;
+        white-space: nowrap;
+        display: inline-flex;
+        border-radius: 0.25em;
+        border: 1px solid #ccc;
+
+        .form-control {
+            flex-grow: 0;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border: none;
+        }
+
+        input.form-control:first-child {
+            border-top-left-radius: 0.25em;
+            border-bottom-left-radius: 0.25em;
+        }
+        .input-group-text {
+            border-style: none;
+            border-radius: 0 0.25em 0.25em 0;
+        }
+        .input-group-prepend, .input-group-append {
+            border-top: none;
+            border-bottom: none;
+            &:first-child {
+                border-bottom: none;
+                border-left: none;
+                border-right:1px solid #ccc;
+            }
+        }
+        .input-group-prepend {
+            .input-group-text {
+                border-radius:0;
+            }
+        }
+        &.full-width {
+            .input-group-prepend, .input-group-append {
+                width: 100%;
+            }
+            .form-control, .ng-select, .ng-control {
+                flex-grow: 1;
+            }
+        }
+        .input-group-prepend + .ng-select {
+            margin-left: 1px;
+        }
+    }
+    .form-control label {
+        margin-bottom: 0;
+        line-height: 24px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    .d-flex > radio {
+        margin-right: 10px;
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}
+
+.validate-input, .validate-input .input-group {
+    .ng-control, &.ng-control {
+        border: 1px solid #ccc;
+        border-left: 5px solid #ccc;
+        &.ng-valid:not(form).ng-touched {
+            border-left: 5px solid #42A948; /* green */
+        }
+
+        &.ng-invalid:not(form).ng-touched {
+            border-left: 5px solid #a94442; /* red */
+        }
+        .ng-control {
+            border: none;
+        }
+    }
+
+    .no-validate-input .input-group {
+        border: 1px solid #ccc;
+        &.ng-valid:not(form).ng-touched {
+            border-left: 1px solid #ccc;
+        }
+
+        &.ng-invalid:not(form).ng-touched {
+            border-left: 1px solid #ccc;
+        }
+        .ng-control {
+            border: none;
+        }
+    }
+    .form-control-container {
+        > .ng-control {
+            border: 1px solid #ccc;
+            border-left: 5px solid #ccc;
+        }
+        &.ng-valid:not(form).ng-touched {
+            > .ng-control {
+                border-left: 5px solid #42A948; /* green */
+            }
+        }
+
+        &.ng-invalid:not(form).ng-touched {
+            > .ng-control {
+                border-left: 5px solid #a94442; /* red */
+            }
+        }
+    }
+}
+
+.full-width {
+    .form-group {
+        .input-group,
+        .form-control {
+            width: 100%;
+        }
+        .input-group .form-control,
+        .ng-select {
+            flex-grow: 1;
+        }
+    }
+}
