@@ -12,4 +12,8 @@ export class FormsDemoComponent {
 
     }
 
+    getRoute(path:string) {
+        return ['', 'forms', path];
+    }
+
 }

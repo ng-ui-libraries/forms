@@ -1,27 +1,27 @@
 import {Component, NgModule, ViewEncapsulation} from '@angular/core';
 import {RouterModule}                           from '@angular/router';
-import {BrowserModule}                          from '@angular/platform-browser';
 import {CommonModule}                           from '@angular/common';
 import {NgFormsModule}                          from '../lib/NgFormsModule';
-import {ConfirmationDemoComponent}   from './Component/ConfirmationDemoComponent';
-import {FormsDemoComponent}          from './Component/FormsDemoComponent';
-import {CheckBoxDemoComponent}       from './Component/CheckBoxDemoComponent';
-import {EmailDemoComponent}          from './Component/EmailDemoComponent';
-import {DatePickerDemoComponent}     from './Component/DatePickerDemoComponent';
-import {DropDownDemoComponent}       from './Component/DropDownDemoComponent';
-import {IndexComponent}              from './Component/IndexComponent';
-import {NestedListDemoComponent}     from './Component/NestedListDemoComponent';
-import {NestedCheckBoxDemoComponent} from './Component/NestedCheckBoxDemoComponent';
-import {RadioDemoComponent}          from './Component/RadioDemoComponent';
-import {TextBoxDemoComponent}        from './Component/TextBoxDemoComponent';
+import {ConfirmationDemoComponent}              from './Component/ConfirmationDemoComponent';
+import {FormsDemoComponent}                     from './Component/FormsDemoComponent';
+import {CheckBoxDemoComponent}                  from './Component/CheckBoxDemoComponent';
+import {EmailDemoComponent}                     from './Component/EmailDemoComponent';
+import {DatePickerDemoComponent}                from './Component/DatePickerDemoComponent';
+import {DropDownDemoComponent}                  from './Component/DropDownDemoComponent';
+import {IndexComponent}                         from './Component/IndexComponent';
+import {NestedListDemoComponent}                from './Component/NestedListDemoComponent';
+import {NestedCheckBoxDemoComponent}            from './Component/NestedCheckBoxDemoComponent';
+import {RadioDemoComponent}                     from './Component/RadioDemoComponent';
+import {TextBoxDemoComponent}                   from './Component/TextBoxDemoComponent';
 
 
 export const routes = [
     {
-        path    : 'forms',
-        children: [
+        path     : 'forms',
+        component: FormsDemoComponent,
+        children : [
             {
-                path: '',
+                path     : '',
                 component: IndexComponent
             },
             {
@@ -61,11 +61,6 @@ export const routes = [
                 component: RadioDemoComponent
             }
         ]
-    },
-    {
-        path      : '',
-        redirectTo: 'forms',
-        pathMatch: 'full'
     }
 ];
 
@@ -84,14 +79,15 @@ export const routes = [
         RadioDemoComponent
     ],
     imports     : [
-        BrowserModule,
         CommonModule,
         NgFormsModule,
-        RouterModule.forRoot(routes)
+        RouterModule.forChild(routes)
     ],
-    exports     : [FormsDemoComponent],
+    exports     : [
+        RouterModule
+    ],
     providers   : [],
-    bootstrap   : [FormsDemoComponent]
+    bootstrap   : []
 
 })
 export class FormsDemoModule {

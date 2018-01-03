@@ -1,7 +1,7 @@
 import '../lib/polyfills';
 
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
-import {FormsDemoModule}             from "./app/FormsDemoModule";
+import {AppModule}              from './app/AppModule';
 
-platformBrowserDynamic().bootstrapModule(FormsDemoModule)
+platformBrowserDynamic().bootstrapModule(AppModule)
     .catch(err => console.log(err));

@@ -25,3 +25,4 @@ export * from '../../test/Mock/MultiSelectorMock';
 export * from '../../test/Mock/SelectorMock';
 export * from '../../test/Mock/SelectorShunt';
 export * from '../app/FormsDemoModule';
+export * from "../app/Component/FormsDemoComponent";
