@@ -29,7 +29,7 @@ import {TextBoxComponent}                                                       
                            [type]="type"
                            [placeholder]="placeholder || ''"
                            [id]="identifier"
-                           [attr.autofocus]="autofocus"
+                           [attr.autofocus]="autofocus || null"
                            [attr.autocapitalize]="autocapitalize"
                            [attr.autocorrect]="autocorrect"
                            [attr.spellcheck]="spellcheck"
@@ -60,7 +60,7 @@ export class EmailComponent extends NgFormControl<string> {
     @Input() placeholder: string         = null;
     @Input() shouldValidate              = true;
     @Input() type: string                = 'text';
-    @Input() autofocus                   = false;
+    @Input() autofocus                   = null;
     @Input() autocorrect                 = true;
     @Input() autocapitalize              = true;
     @Input() spellcheck                  = true;
