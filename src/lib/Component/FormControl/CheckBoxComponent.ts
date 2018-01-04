@@ -17,7 +17,7 @@ import {RequiredCheckBoxValidator} from '../../Validation/Directive/RequiredChec
     selector     : 'check-box',
     template     : `
         <ng-container *ngIf="initialized">
-            <div class="form-group" [class.validate-input]="shouldValidate" [class.no-validate-input]="!shouldValidate">
+            <div class="form-group" [class.validate-input]="shouldValidate" [class.no-validate-input]="!shouldValidate" [class.checked]="value">
                 <validation-messages *ngIf="(isInvalid$() | async)" [errors]="failures$ | async" [label]="label">
                 </validation-messages>
                 <label *ngIf="labelPlacement === 'above'" for="{{identifier}}">

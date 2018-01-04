@@ -22,12 +22,14 @@ check-box, nested-list, nested-check-box, date-picker, email {
         display: inline-flex;
         border-radius: 0.25em;
         border: 1px solid #ccc;
+        flex-wrap: nowrap;
 
         .form-control {
             flex-grow: 0;
             border-top-left-radius: 0;
             border-bottom-left-radius: 0;
             border: none;
+            white-space:normal;
         }
 
         input.form-control:first-child {
@@ -44,12 +46,12 @@ check-box, nested-list, nested-check-box, date-picker, email {
             &:first-child {
                 border-bottom: none;
                 border-left: none;
-                border-right:1px solid #ccc;
+                border-right: 1px solid #ccc;
             }
         }
         .input-group-prepend {
             .input-group-text {
-                border-radius:0;
+                border-radius: 0;
             }
         }
         &.full-width {

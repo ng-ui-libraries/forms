@@ -1,12 +1,12 @@
 import {
     ViewEncapsulation, Component, Input, EventEmitter, OnDestroy, OnInit, ViewChild,
     Injector, KeyValueDiffers, KeyValueDiffer, DoCheck
-} from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {NestedSearcher} from "../../Service/Impl/NestedSearcher";
-import {Async, OnChange, Value} from "@ng-app-framework/core";
-import {Observable} from "rxjs/Rx";
-import {NgFormControl} from "../NgFormControl";
+}                                                                   from '@angular/core';
+import {AbstractControl, FormControl, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {NestedSearcher}                                             from '../../Service/Impl/NestedSearcher';
+import {Async, OnChange, Value}                                     from '@ng-app-framework/core';
+import {Observable}                                                 from 'rxjs/Rx';
+import {NgFormControl}                                              from '../NgFormControl';
 
 @Component({
     selector     : 'nested-check-box',
@@ -31,10 +31,11 @@ import {NgFormControl} from "../NgFormControl";
                             [searchBy]="searchBy">
                         <ng-template let-item>
                             <check-box #checkbox [threeState]="hasChildren(item)"
+                                       class="full-width"
                                        *ngIf="item.name"
                                        (onInit)="item.checkbox = checkbox"
                                        [shouldValidate]="false"
-                                       labelPlacement="after"
+                                       [labelPlacement]="labelPlacement"
                                        [(ngModel)]="selection[item[selectBy]]"
                                        (ngModelChange)="control.markAsTouched()"
                                        (stateChange)="updateChildrenOfItem(item, $event).subscribe()"
@@ -68,6 +69,8 @@ export class NestedCheckBoxComponent extends NgFormControl<any[]> implements OnI
     @Input() placeholder: string         = null;
     @Input() shouldValidate              = true;
 
+    @Input() labelPlacement = 'before';
+
     onCollapseAll = new EventEmitter<any>();
     onExpandAll   = new EventEmitter<any>();
 
@@ -91,8 +94,10 @@ export class NestedCheckBoxComponent extends NgFormControl<any[]> implements OnI
         }
     }];
 
-    constructor(differs: KeyValueDiffers,
-                public injector: Injector) {
+    constructor(
+        differs: KeyValueDiffers,
+        public injector: Injector
+    ) {
         super(injector);
         this.selectionDiffer = differs.find({}).create();
     }
@@ -147,9 +152,9 @@ export class NestedCheckBoxComponent extends NgFormControl<any[]> implements OnI
     updateChildrenOfItem(item, checkedStatus, top = null): Observable<any> {
         top = top || item;
         return Observable.from(item.children || [])
-            .flatMap((child: { [key: string]: any }) => {
-                child.checkbox.state = top.checkbox.state !== 'indeterminate' ? top.checkbox.state : child.checkbox.state;
-                return this.updateChildrenOfItem(child, checkedStatus, top);
-            });
+                         .flatMap((child: { [key: string]: any }) => {
+                             child.checkbox.state = top.checkbox.state !== 'indeterminate' ? top.checkbox.state : child.checkbox.state;
+                             return this.updateChildrenOfItem(child, checkedStatus, top);
+                         });
     }
 }

@@ -16,6 +16,12 @@ nested-check-box {
             margin-bottom: 0;
         }
         check-box {
+            .form-group {
+                border: 1px solid transparent;
+                &.checked {
+                    border: 1px dashed #ccc;
+                }
+            }
             .form-group.no-validate-input {
                 .form-control, .input-group-prepend, .input-group-append, .input-group, .input-group-text {
                     padding: 2px 4px;
