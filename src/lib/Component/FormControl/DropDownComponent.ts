@@ -11,7 +11,7 @@ import {NgFormControl}                             from '../NgFormControl';
     template     : `
         <ng-container *ngIf="initialized">
             <ng-template #defaultOption let-item>
-                {{ item.text }}
+                {{ item[labelField] }}
             </ng-template>
             <div class="form-group" [class.validate-input]="shouldValidate" [class.no-validate-input]="!shouldValidate">
                 <validation-messages *ngIf="(isInvalid$() | async)" [errors]="failures" [label]="label">
