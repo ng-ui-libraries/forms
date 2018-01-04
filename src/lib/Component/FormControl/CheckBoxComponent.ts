@@ -119,6 +119,10 @@ export class CheckBoxComponent extends NgFormControl<any> implements OnInit, OnD
     }
 
     onLoad() {
+        if (!this.element || !this.element.nativeElement) {
+            setTimeout(() => this.onLoad(), 500);
+            return;
+        }
         Observable.fromEvent(this.element.nativeElement, 'keypress')
                   .takeUntil(this.onDestroy$)
                   .subscribe((event: KeyboardEvent) => {

@@ -83,6 +83,10 @@ export class RadioComponent extends NgFormControl<any> implements OnInit, OnDest
     }
 
     onLoad() {
+        if (!this.element || !this.element.nativeElement) {
+            setTimeout(() => this.onLoad(), 500);
+            return;
+        }
         Observable.fromEvent(this.element.nativeElement, 'keydown')
                   .takeUntil(this.onDestroy$)
                   .subscribe((event: KeyboardEvent) => {

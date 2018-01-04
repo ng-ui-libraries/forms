@@ -95,6 +95,10 @@ export class DatePickerComponent extends NgFormControl<string> {
     }
 
     onLoad() {
+        if (!this.input || !this.input.nativeElement) {
+            setTimeout(() => this.onLoad(), 500);
+            return;
+        }
         Observable.fromEvent(this.input.nativeElement, 'keydown')
                   .takeUntil(this.onDestroy$)
                   .subscribe((event: KeyboardEvent) => {
