@@ -44,7 +44,7 @@ nested-list {
             padding: 1px 2px;
         }
     }
-    .show-lines {
+    .show-lines,&.show-lines {
 
         > .fa-plus, > .fa-minus {
             left: -28px;
