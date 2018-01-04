@@ -22,11 +22,11 @@ import {TextBoxComponent}                                                       
                      [ngClass]="{'ng-invalid':(isInvalid$() | async), 'ng-touched':(touched$ | async), 'ng-valid':!(isInvalid$() | async)}">
                     <div class="input-group-prepend">
                         <div class="input-group-text">
-                        <span class="fa fa-envelope"></span>
+                            <span class="fa fa-envelope"></span>
                         </div>
                     </div>
                     <input class="form-control"
-                           type="text"
+                           [type]="type"
                            [placeholder]="placeholder || ''"
                            [id]="identifier"
                            [name]="name"
@@ -55,6 +55,7 @@ export class EmailComponent extends NgFormControl<string> {
     @Input() label: string               = '';
     @Input() placeholder: string         = null;
     @Input() shouldValidate              = true;
+    @Input() type: string                = 'text';
 
     shouldValidateEmail: boolean = false;
 
