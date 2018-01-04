@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation} from "@angular/core";
+import {Component, ViewEncapsulation} from '@angular/core';
 
 @Component({
     selector     : '.checkbox-demo',
@@ -8,25 +8,23 @@ import {Component, ViewEncapsulation} from "@angular/core";
 export class CheckBoxDemoComponent {
 
     model = {
+        ngModel     : null,
         name        : 'testCheckBox',
         isThreeState: false,
-        required    : false,
+        required    : true,
         state       : 'off',
-        checked     : false,
-        ngModel     : null,
         value       : 'CHECK BOX IS CHECKED!'
     };
 
     markup = `
 <check-box
-        [name]="model.name"
-        [required]="model.required"
-        [threeState]="model.isThreeState"
-        [checkedValue]="model.value"
-        [(ngModel)]="model.ngModel"
-        [(state)]="model.state"
-        label="Test Check Box">
-</check-box>
+    [name]="model.name"
+    [required]="model.required"
+    [threeState]="model.isThreeState"
+    [checkedValue]="model.value"
+    [(ngModel)]="model.ngModel"
+    [(state)]="model.state"
+    label="Test Check Box"></check-box>
     `;
 }
 

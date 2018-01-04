@@ -1,6 +1,6 @@
 import {
     ViewEncapsulation, Component, Input, EventEmitter, Output, ViewChild, OnInit, OnDestroy,
-    Inject, Injector
+    Inject, Injector, KeyValueDiffer, KeyValueDiffers
 }                                  from '@angular/core';
 import {
     FormControl,
@@ -25,7 +25,7 @@ import {RequiredCheckBoxValidator} from '../../Validation/Directive/RequiredChec
                     <span *ngIf="required">*</span>
                 </label>
                 <div></div>
-                <div (click)="updateState();markAsTouched();" class="input-group check-container ng-control"
+                <div (click)="nextState()" class="input-group check-container ng-control"
                      tabindex="0"
                      #element
                      [ngClass]="{'ng-invalid': isInvalid$() | async, 'ng-touched':(touched$ | async), 'ng-valid':!(isInvalid$() | async) && (touched$ | async)}">
@@ -40,8 +40,7 @@ import {RequiredCheckBoxValidator} from '../../Validation/Directive/RequiredChec
                             <input readonly #checkbox type="checkbox"
                                    [id]="identifier"
                                    [disabled]="disabled"
-                                   [attr.checked]="checked || null"
-                                   [value]="checkedValue"
+                                   [(ngModel)]="value"
                                    tabindex="-1"/>
                         </div>
                     </div>
@@ -67,8 +66,7 @@ import {RequiredCheckBoxValidator} from '../../Validation/Directive/RequiredChec
 })
 export class CheckBoxComponent extends NgFormControl<any> implements OnInit, OnDestroy {
 
-    @OnChange checked: boolean = false;
-    @OnChange @Input() state   = 'off';
+    @OnChange @Input() state = 'off';
 
     @Input() name: string                = '';
     @Input() label: string               = '';
@@ -79,23 +77,24 @@ export class CheckBoxComponent extends NgFormControl<any> implements OnInit, OnD
     @OnChange @Input() required: boolean = false;
     @Input() parentFormControl: FormControl;
     @Input() parentFormGroup: FormGroup;
+    @OnChange @Input() threeState        = false;
 
-    requiredChange          = new EventEmitter<boolean>();
-    @Output() checkedChange = new EventEmitter<boolean>();
-    @Output() stateChange   = new EventEmitter<string>();
+    @Output() threeStateChange = new EventEmitter<boolean>();
+              requiredChange   = new EventEmitter<boolean>();
+    @Output() stateChange      = new EventEmitter<string>();
 
     identifier = `check-box-${identifier++}`;
 
     @ViewChild('checkbox') checkbox;
     @ViewChild('element') element;
 
-    @Input() threeState = false;
-
     @Output() onInit = new EventEmitter<any>();
 
     requiredValidator: RequiredValidator = new RequiredCheckBoxValidator();
 
-    constructor(@Inject(Injector) public injector: Injector) {
+    valueDiffer: KeyValueDiffer<string, boolean>;
+
+    constructor(@Inject(Injector) public injector: Injector, public differs: KeyValueDiffers) {
         super(injector);
         this.additionalValidators = [this.requiredValidator];
     }
@@ -103,57 +102,61 @@ export class CheckBoxComponent extends NgFormControl<any> implements OnInit, OnD
     ngOnInit() {
         super.ngOnInit();
         this.onInit.emit();
-        this.updateCheckedStatus();
-        this.watchChanges();
+        this.requiredValidator.required = this.required;
+        this.valueDiffer                = this.differs.find({value: false}).create();
+        this.requiredChange.merge(this.stateChange).merge(this.threeStateChange).takeUntil(this.onDestroy$).subscribe(() => {
+            this.requiredValidator.required = this.required;
+            this.updateState();
+            this.value = this.state === 'on' ? this.checkedValue : false;
+        });
+        this.updateState();
     }
 
-    watchChanges() {
-        this.requiredChange.merge(this.stateChange).takeUntil(this.onDestroy$).subscribe(() => {
-            this.updateCheckedStatus();
-        });
+    ngDoCheck() {
+        if (this.valueDiffer && this.valueDiffer.diff({value: this.value})) {
+            this.updateState();
+        }
     }
 
     onLoad() {
-
         Observable.fromEvent(this.element.nativeElement, 'keypress')
                   .takeUntil(this.onDestroy$)
                   .subscribe((event: KeyboardEvent) => {
                       if (event.key === ' ') {
-                          this.updateState();
-                          this.markAsTouched();
+                          this.nextState();
+                          event.preventDefault();
                       }
                   });
     }
 
-    updateCheckedStatus() {
-        this.requiredValidator.required = this.required;
-        this.checked                    = this.state === 'on';
-        this.value                      = this.checked ? this.checkedValue : false;
-        if (this.checkbox && this.checkbox.nativeElement) {
-            this.checkbox.nativeElement.indeterminate = this.state === 'indeterminate';
+    nextState() {
+        if (!this.disabled) {
+            this.control.markAsTouched();
+            if (this.threeState && this.state === 'on') {
+                this.state = 'indeterminate';
+                return;
+            }
+            this.state = this.state === 'off' ? 'on' : 'off';
         }
-    }
-
-    markAsTouched() {
-        this.model.control.markAsTouched();
     }
 
     updateState() {
-        if (!this.disabled && !this.setIndeterminateIfNecessary()) {
-            this.toggle();
-        }
+        setTimeout(() => {
+            this.correctState();
+            if (this.checkbox && this.checkbox.nativeElement) {
+                this.checkbox.nativeElement.indeterminate = this.state === 'indeterminate';
+            }
+            this.value = this.state === 'on' ? this.checkedValue : false;
+        });
     }
 
-    setIndeterminateIfNecessary() {
-        if (this.threeState && this.state === 'on') {
-            this.state = 'indeterminate';
-            return true;
+    correctState() {
+        if (this.value && this.state === 'off') {
+            this.state = 'on';
         }
-        return false;
-    }
-
-    toggle() {
-        this.state = this.state === 'off' ? 'on' : 'off';
+        if ((this.state === 'on' && !this.value) || (this.state === 'indeterminate' && !this.threeState)) {
+            this.state = 'off';
+        }
     }
 }
 
