@@ -10,6 +10,7 @@ export class TextBoxDemoComponent {
     model = {
         name       : 'textBoxField',
         icon       : '',
+        type: 'text',
         shouldMatch: false,
         match      : '',
         required   : false,
@@ -20,6 +21,7 @@ export class TextBoxDemoComponent {
     markup = `
 <text-box
         [name]="model.name"
+        [type]="model.type"
         label="Test Text Field"
         [(ngModel)]="model.value"
         [matchValue]="model.shouldMatch ? {value:model.match,label:'Matching Field'} : null"

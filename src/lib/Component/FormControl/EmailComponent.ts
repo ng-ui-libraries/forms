@@ -26,13 +26,9 @@ import {TextBoxComponent}                                                       
                         </div>
                     </div>
                     <input class="form-control"
-                           [type]="type"
+                           type="text"
                            [placeholder]="placeholder || ''"
                            [id]="identifier"
-                           [attr.autofocus]="autofocus || null"
-                           [attr.autocapitalize]="autocapitalize"
-                           [attr.autocorrect]="autocorrect"
-                           [attr.spellcheck]="spellcheck"
                            [name]="name"
                            [(ngModel)]="value"
                            (blur)="triggerValidation()"
@@ -59,11 +55,6 @@ export class EmailComponent extends NgFormControl<string> {
     @Input() label: string               = '';
     @Input() placeholder: string         = null;
     @Input() shouldValidate              = true;
-    @Input() type: string                = 'text';
-    @Input() autofocus                   = null;
-    @Input() autocorrect                 = true;
-    @Input() autocapitalize              = true;
-    @Input() spellcheck                  = true;
 
     shouldValidateEmail: boolean = false;
 

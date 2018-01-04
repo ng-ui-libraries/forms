@@ -1,11 +1,11 @@
 import {
     Component, Input, ViewChild, ViewEncapsulation, Injector,
     Output, EventEmitter
-} from '@angular/core';
-import {NG_VALUE_ACCESSOR, FormControl, FormGroup} from "@angular/forms";
-import {OnChange} from "@ng-app-framework/core";
-import {Observable} from "rxjs/Rx";
-import {NgFormControl} from "../NgFormControl";
+}                                                  from '@angular/core';
+import {NG_VALUE_ACCESSOR, FormControl, FormGroup} from '@angular/forms';
+import {OnChange}                                  from '@ng-app-framework/core';
+import {Observable}                                from 'rxjs/Rx';
+import {NgFormControl}                             from '../NgFormControl';
 
 @Component({
     selector     : 'text-box',
@@ -22,7 +22,7 @@ import {NgFormControl} from "../NgFormControl";
                 <div class="input-group ng-control" (click)="click.emit()"
                      [ngClass]="{'ng-invalid':(isInvalid$() | async), 'ng-touched':(touched$ | async), 'ng-valid':!(isInvalid$() | async)}">
                     <ng-content select=".input-group-prepend"></ng-content>
-                    <input class="form-control" type="text" #input
+                    <input class="form-control" [type]="type" #input
                            (focus)="inputFocus.emit()"
                            [placeholder]="placeholder || ''"
                            [id]="identifier"
@@ -30,6 +30,10 @@ import {NgFormControl} from "../NgFormControl";
                            [disabled]="disabled"
                            [(ngModel)]="value"
                            (blur)="triggerValidation()"
+                           [attr.autofocus]="autofocus || null"
+                           [attr.autocapitalize]="autocapitalize"
+                           [attr.autocorrect]="autocorrect"
+                           [attr.spellcheck]="spellcheck"
                     />
                     <ng-content select=".input-group-append"></ng-content>
                 </div>
@@ -59,9 +63,16 @@ export class TextBoxComponent extends NgFormControl<string> {
     @Output() inputFocusOut              = new EventEmitter<any>();
     @Output() inputFocus                 = new EventEmitter<any>();
 
+
+    @Input() type: string   = 'text';
+    @Input() autofocus      = null;
+    @Input() autocorrect    = true;
+    @Input() autocapitalize = true;
+    @Input() spellcheck     = true;
+
     @Input() format: { regex: RegExp | RegExp[], replacement: string | Function };
 
-    @ViewChild("input") input;
+    @ViewChild('input') input;
 
     protected identifier = `text-box-${identifier++}`;
 
@@ -71,12 +82,12 @@ export class TextBoxComponent extends NgFormControl<string> {
 
     onLoad() {
         Observable.fromEvent(this.input.nativeElement, 'keydown')
-            .takeUntil(this.onDestroy$)
-            .subscribe((event: KeyboardEvent) => {
-                if (event.key === 'Tab') {
-                    this.triggerValidation();
-                }
-            });
+                  .takeUntil(this.onDestroy$)
+                  .subscribe((event: KeyboardEvent) => {
+                      if (event.key === 'Tab') {
+                          this.triggerValidation();
+                      }
+                  });
     }
 
     protected triggerValidation() {

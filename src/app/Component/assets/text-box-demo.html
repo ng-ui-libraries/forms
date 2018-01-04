@@ -10,6 +10,7 @@
         <div class="clearfix"></div>
         <text-box
                 [name]="model.name"
+                [type]="model.type"
                 label="Test Text Field"
                 [(ngModel)]="model.value"
                 [matchValue]="model.shouldMatch ? {value:model.match,label:'Matching Field'} : null"
