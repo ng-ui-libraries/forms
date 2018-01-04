@@ -46,6 +46,10 @@
         }
     },
     "defaults": {
+        "component"       : {},
+        "build"           : {
+            "preserveSymlinks": true
+        },
         "styleExt"        : "scss",
         "prefixInterfaces": true,
         "inline"          : {
