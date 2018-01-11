@@ -1,12 +1,12 @@
 import {Component, Input, ViewEncapsulation, Output, EventEmitter, ViewChild, ElementRef} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
-import {Observable} from "rxjs/Rx";
+import {FormControl, FormGroup}                                                           from '@angular/forms';
+import {Observable}                                                                       from 'rxjs/Rx';
 
 @Component({
     selector     : 'submit-button',
     template     : `
         <div [class.form-group]="inFormGroup">
-            <button class="btn btn-primary" type="button" (click)="submit()" [id]="identifier" #button>
+            <button class="btn btn-primary" type="button" (click)="submit()" [id]="getId()" #button>
                 <span class="fa fa-{{ icon }}" *ngIf="icon.length > 0 && iconPlacement === 'before'"></span>
                 {{label}}
                 <span class="fa fa-{{ icon }}" *ngIf="icon.length > 0 && iconPlacement === 'after'"></span>
@@ -27,6 +27,10 @@ export class SubmitButtonComponent {
 
     protected identifier = `submit-${identifier++}`;
 
+    getId() {
+        return this.identifier;
+    }
+
     onDestroy$ = new EventEmitter<any>();
 
     @ViewChild('button') button: ElementRef;
@@ -35,12 +39,12 @@ export class SubmitButtonComponent {
 
     ngOnInit() {
         Observable.fromEvent(this.button.nativeElement, 'keypress')
-            .takeUntil(this.onDestroy$)
-            .subscribe((value: KeyboardEvent) => {
-                if (value.key === 'Enter' || value.key === ' ') {
-                    return this.submit();
-                }
-            });
+                  .takeUntil(this.onDestroy$)
+                  .subscribe((value: KeyboardEvent) => {
+                      if (value.key === 'Enter' || value.key === ' ') {
+                          return this.submit();
+                      }
+                  });
     }
 
     ngOnDestroy() {
