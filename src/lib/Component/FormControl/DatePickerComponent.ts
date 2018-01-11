@@ -45,6 +45,7 @@ import {NgFormControl}                             from '../NgFormControl';
                            bsDatepicker
                            #dp="bsDatepicker"
                            [triggers]="''"
+                           [placement]="placement"
                            [bsConfig]="{containerClass: theme,weeks:false}"
                            [minDate]="minDate"
                            [maxDate]="maxDate"
@@ -79,6 +80,7 @@ export class DatePickerComponent extends NgFormControl<string> {
 
     @Input() shouldValidate: boolean = true;
     @Input() placeholder: string     = '';
+    @Input() placement: string       = 'bottom';
 
     @ViewChild('input') input: ElementRef;
     @ViewChild('dp') datePicker: BsDatepickerDirective;
