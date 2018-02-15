@@ -194,7 +194,6 @@ export class NestedCheckBoxComponent extends NgFormControl<any[]> implements OnI
     updateChildren$(item) {
         return Observable.from(item.children || [])
                          .filter((child: any) => {
-                             console.log(child.$shown, child.$parentMatches, child.name);
                              return child.$shown;
                          })
                          .do((child: any) => {
