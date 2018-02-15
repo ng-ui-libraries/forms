@@ -17,7 +17,7 @@ import {NestedSearcher} from "../../Service/Impl/NestedSearcher";
                       placeholder="Search ..." icon="search"
                       shouldValidate="false"></text-box>
         </ng-container>
-        <div class="nested-list-container {{containerClass}}" [class.top]="isTop" *ngIf="searcher.isTermLongEnough()">
+        <div class="nested-list-container {{containerClass}}" [class.top]="isTop">
             <div class="parent-node" [class.has-children]="!isCollapsed() && hasChildren()"
                  [class.show-lines]="showLines"
                  [class.bold]="item['$matches']"
@@ -32,7 +32,7 @@ import {NestedSearcher} from "../../Service/Impl/NestedSearcher";
             </div>
             <div class="children-list" *ngIf="hasChildren() && shouldDisplay(item) && !isCollapsed()">
                 <ng-container *ngFor="let child of item.children">
-                    <nested-list [item]="child" [template]="template" [initialCollapse]="initialCollapse"
+                    <nested-list [item]="child" [template]="template" [initialCollapse]="true"
                                  [searcher]="searcher"
                                  [showLines]="showLines" [collapseButton]="collapseButton"
                                  [onCollapseAll]="onCollapseAll" [onExpandAll]="onExpandAll"
@@ -77,6 +77,7 @@ export class NestedListComponent implements OnInit, OnDestroy {
         if (!this.searcher) {
             this.searcher = new NestedSearcher(this.searchBy);
         }
+        this.item.$collapsed = this.searcher.isTermLongEnough() ? this.item.$collapsed : this.initialCollapse;
         let stopListening    = UnsubscribeAll.merge(this.onDestroy$);
         this.onCollapseAll.takeUntil(stopListening).subscribe(() => {
             this.item.$collapsed = true;
@@ -84,7 +85,9 @@ export class NestedListComponent implements OnInit, OnDestroy {
         this.onExpandAll.takeUntil(stopListening).subscribe(() => {
             this.item.$collapsed = false;
         });
-        this.updateSearch$.debounceTime(1000).takeUntil(stopListening).subscribe((value) => this.updateMatches(value));
+        this.updateSearch$.debounceTime(1000).takeUntil(stopListening).subscribe((value) => {
+            this.updateMatches(value);
+        });
 
     }
 
@@ -111,7 +114,7 @@ export class NestedListComponent implements OnInit, OnDestroy {
     }
 
     shouldDisplay(item) {
-        return item.$shown;
+        return !this.searcher.isTermLongEnough() || item.$shown;
     }
 
 }

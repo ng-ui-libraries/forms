@@ -7,9 +7,14 @@ export class NestedSearcher extends Searcher {
 
     updateMatches(item) {
         this.initializeMetadata(item);
-        if (this.isTermLongEnough()) {
-            this.updateChildrenForItem$(item, item).subscribe();
-        }
+        this.updateChildrenForItem$(item, item).subscribe({
+            complete: () => {
+                if (!this.isTermLongEnough()) {
+                    item.$shown = true;
+                    item.$collapsed = false;
+                }
+            }
+        });
     }
 
     initializeMetadata(item) {
@@ -25,6 +30,13 @@ export class NestedSearcher extends Searcher {
 
         if (item.hasOwnProperty('children') && Array.isArray(item['children']) && item['children'].length > 0) {
             return Observable.from(item.children)
+                             .filter((child: any) => {
+                                 if (this.isTermLongEnough()) {
+                                     return true;
+                                 }
+                                 child.$collapsed = true;
+                                 return false;
+                             })
                              .flatMap((child: any) => {
                                  this.initializeMetadata(child);
                                  child.$parentMatches = item.$matches || item.$parentMatches;
