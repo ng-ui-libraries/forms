@@ -19,7 +19,7 @@ import {NgFormControl}                                              from '../NgF
                     {{label}}
                 </label>
                 <div></div>
-                <ng-container *ngIf="areOptionsInitialized">
+                <ng-container>
                     <nested-list
                             class="form-control-container"
                             [ngClass]="{'ng-invalid':(isInvalid$() | async), 'ng-touched':(touched$ | async), 'ng-valid':!(isInvalid$() | async)}"
@@ -28,21 +28,17 @@ import {NgFormControl}                                              from '../NgF
                             [showLines]="false"
                             [onCollapseAll]="onCollapseAll"
                             [onExpandAll]="onExpandAll"
-                            [searchBy]="searchBy">
+                            [searchBy]="searchBy"
+                    >
                         <ng-template let-item>
-                            <check-box #checkbox [threeState]="hasChildren(item)"
-                                       class="full-width"
-                                       *ngIf="item.name"
-                                       (onInit)="item.checkbox = checkbox"
-                                       [shouldValidate]="false"
-                                       [labelPlacement]="labelPlacement"
-                                       [(ngModel)]="selection[item[selectBy]]"
-                                       (ngModelChange)="control.markAsTouched()"
-                                       (stateChange)="updateChildrenOfItem(item, $event).subscribe()"
-                                       [name]="item.name"
-                                       [label]="item.name"
-                                       [hidden]="searcher.search.length > 0 && !item['$matches'] && !item['$parentMatches']">
-                            </check-box>
+                            <div class="three-state" [class.active]="selection[item[selectBy]]">
+                                <span>{{item.name}}</span>
+                                <button class="btn btn-sm btn-outline-primary" type="button" (click)="click(item)" >
+                                <span class="fa" [class.fa-square-o]="!selection[item[selectBy]] && !indeterminate[item[selectBy]]"
+                                      [class.fa-check-square-o]="selection[item[selectBy]]"
+                                      [class.fa-minus-square-o]="indeterminate[item[selectBy]]"></span>
+                                </button>
+                            </div>
                         </ng-template>
                     </nested-list>
                 </ng-container>
@@ -79,8 +75,9 @@ export class NestedCheckBoxComponent extends NgFormControl<any[]> implements OnI
     @Input() selectBy: string   = 'id';
     @Input() searchBy: string[] = ['name'];
 
-    protected selection: { [key: string]: any } = {};
-    protected initializedOptions                = [];
+    protected selection: { [key: string]: any }     = {};
+    protected indeterminate: { [key: string]: any } = {};
+    protected initializedOptions                    = [];
     protected searcher: NestedSearcher;
 
     protected selectionDiffer: KeyValueDiffer<string, boolean>;
@@ -104,17 +101,21 @@ export class NestedCheckBoxComponent extends NgFormControl<any[]> implements OnI
 
     areOptionsInitialized = false;
 
-    shouldDisplay = {};
 
     initializeOption(list, parent = null) {
-        for (let option of list) {
-            option.parent                         = parent;
-            this.selection[option[this.selectBy]] = this.value.indexOf(option[this.selectBy]) > -1;
-
-            if (this.hasChildren(option)) {
-                this.initializeOption(option.children, option);
-            }
-        }
+        return Observable.from(list)
+                         .do((option: any) => {
+                             option.parent = parent;
+                             if (this.value && this.value.length > 0) {
+                                 this.selection[option[this.selectBy]] = this.value.indexOf(option[this.selectBy]) > -1;
+                             }
+                         })
+                         .flatMap((option: any) => {
+                             if (this.hasChildren(option)) {
+                                 return this.initializeOption(option.children, option);
+                             }
+                             return Observable.from([]);
+                         });
 
     }
 
@@ -126,11 +127,11 @@ export class NestedCheckBoxComponent extends NgFormControl<any[]> implements OnI
     }
 
     initializeOptions() {
-        setTimeout(() => {
-            let copy = JSON.parse(JSON.stringify(this.options));
-            this.initializeOption(copy);
-            this.initializedOptions    = copy;
-            this.areOptionsInitialized = true;
+        this.initializedOptions = JSON.parse(JSON.stringify(this.options));
+        this.initializeOption(this.initializedOptions).subscribe({
+            complete: () => {
+                this.areOptionsInitialized = true;
+            }
         });
     }
 
@@ -149,12 +150,65 @@ export class NestedCheckBoxComponent extends NgFormControl<any[]> implements OnI
         return Value.hasArrayElements(item.children);
     }
 
-    updateChildrenOfItem(item, checkedStatus, top = null): Observable<any> {
-        top = top || item;
+    click(item) {
+        this.selection[item[this.selectBy]] = this.selection[item[this.selectBy]] || this.indeterminate[item[this.selectBy]] ? null : item[this.selectBy];
+        this.updateThreeState(item);
+        this.updateChildren$(item)
+            .toArray().subscribe({
+            next    : (arr) => {
+                if (arr.length === 0) {
+                    this.indeterminate[item[this.selectBy]] = null;
+                }
+            },
+            complete: () => {
+                this.updateParents(item);
+                this.control.markAsTouched();
+            }
+        });
+    }
+
+    private updateParents(item) {
+        if (item.parent) {
+            if (this.indeterminate[item.parent[this.selectBy]] && !this.indeterminate[item[this.selectBy]] && !this.selection[item[this.selectBy]]) {
+                this.indeterminate[item.parent[this.selectBy]] = null;
+                this.updateParents(item.parent);
+            }
+        }
+    }
+
+    private updateThreeState(item) {
+        if (!this.selection[item[this.selectBy]] && !this.indeterminate[item[this.selectBy]] && item.children && item.children.length > 0) {
+            this.indeterminate[item[this.selectBy]] = item[this.selectBy];
+            return;
+        }
+        this.indeterminate[item[this.selectBy]] = null;
+    }
+
+    updateChildren$(item) {
         return Observable.from(item.children || [])
-                         .flatMap((child: { [key: string]: any }) => {
-                             child.checkbox.state = top.checkbox.state !== 'indeterminate' ? top.checkbox.state : child.checkbox.state;
-                             return this.updateChildrenOfItem(child, checkedStatus, top);
+                         .filter((child: any) => child.$shown)
+                         .do((child: any) => {
+                             if (this.selection[item[this.selectBy]]) {
+                                 this.selection[child[this.selectBy]]     = child[this.selectBy];
+                                 this.indeterminate[child[this.selectBy]] = null;
+                                 return;
+                             }
+                             if (!this.indeterminate[item[this.selectBy]]) {
+                                 this.selection[child[this.selectBy]]     = null;
+                                 this.indeterminate[child[this.selectBy]] = null;
+                             }
+                         })
+                         .flatMap((child: any) => {
+                             if (child.children && child.children.length > 0) {
+                                 if (this.selection[child[this.selectBy]]) {
+                                     return Observable.from([child]).concat(this.updateChildren$(child));
+                                 }
+                                 return this.updateChildren$(child);
+                             }
+                             if (this.selection[child[this.selectBy]]) {
+                                 return Observable.from([child]);
+                             }
+                             return Observable.from([]);
                          });
     }
 }

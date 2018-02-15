@@ -1,20 +1,55 @@
-import {Searcher} from "./Searcher";
-import {Observable} from "rxjs/Rx";
-import {Async, Value} from "@ng-app-framework/core";
-import 'rxjs/Rx';
+import {Searcher}     from './Searcher';
+import {Observable}   from 'rxjs/Rx';
+import {Async, Value} from '@ng-app-framework/core';
 
 export class NestedSearcher extends Searcher {
 
 
     updateMatches(item) {
-        item.$matches      = this.isTermLongEnough() && this.doesItemMatchSearch(item);
-        item.$childMatches = false;
+        this.initializeMetadata(item);
+        if (this.isTermLongEnough()) {
+            this.updateChildrenForItem$(item, item).subscribe();
+        }
+    }
+
+    initializeMetadata(item) {
+        item.$parentMatches = item.$parentMatches || false;
+        item.$shown         = item.$parentMatches;
+        item.$matches       = false;
+        item.$childMatches  = false;
+        item.$matches       = this.doesItemMatchSearch(item);
+        item.$collapsed     = false;
+    }
+
+    updateChildrenForItem$(item, top) {
+
         if (item.hasOwnProperty('children') && Array.isArray(item['children']) && item['children'].length > 0) {
-            for (let child of item.children) {
-                child.$parentMatches = item.$matches || item.$parentMatches || false;
-                this.updateMatches(child);
-                item.$childMatches = child.$matches || child.$childMatches || item.$childMatches;
-            }
+            return Observable.from(item.children)
+                             .flatMap((child: any) => {
+                                 this.initializeMetadata(child);
+                                 child.$parentMatches = item.$matches || item.$parentMatches;
+                                 return Observable.of(child).concat(this.updateChildrenForItem$(child, top));
+                             })
+                             .filter(child => child.$matches)
+                             .do((child: any) => {
+                                 this.updateParentChildMatches(child);
+                                 top.$childMatches = true;
+                             })
+                             .toArray()
+                             .do((list) => {
+                                 item.$shown     = item.$childMatches || item.$parentMatches || item.$matches;
+                                 item.$collapsed = item.$matches || !item.$childMatches;
+                             });
+        }
+        item.$shown     = item.$parentMatches || item.$matches;
+        item.$collapsed = true;
+        return Observable.from([]);
+    }
+
+    updateParentChildMatches(item) {
+        if (item.parent) {
+            item.parent.$childMatches = true;
+            this.updateParentChildMatches(item.parent);
         }
     }
 
@@ -48,7 +83,7 @@ export class NestedSearcher extends Searcher {
             item.children,
             child => this.doesItemMatchSearch$(child)
         )
-            .toArray()
-            .map(arr => arr.indexOf(true) > -1);
+                    .toArray()
+                    .map(arr => arr.indexOf(true) > -1);
     }
 }

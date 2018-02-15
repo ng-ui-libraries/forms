@@ -13,16 +13,16 @@ import {NestedSearcher} from "../../Service/Impl/NestedSearcher";
         <ng-container *ngIf="isTop && searchable">
             <text-box name="nested-search" class="full-width"
                       [(ngModel)]="searcher.search"
-                      (ngModelChange)="updateMatches($event)"
+                      (ngModelChange)="updateSearch$.emit($event)"
                       placeholder="Search ..." icon="search"
                       shouldValidate="false"></text-box>
         </ng-container>
-        <div class="nested-list-container {{containerClass}}" [class.top]="isTop">
+        <div class="nested-list-container {{containerClass}}" [class.top]="isTop" *ngIf="searcher.isTermLongEnough()">
             <div class="parent-node" [class.has-children]="!isCollapsed() && hasChildren()"
                  [class.show-lines]="showLines"
                  [class.bold]="item['$matches']"
                  (click)="!collapseButton ? toggle() : null"
-                 [hidden]="!shouldDisplay(item)">
+                 *ngIf="shouldDisplay(item)">
                 <ng-container
                         *ngTemplateOutlet="template ? template : defaultTemplate;context:{$implicit: item}"></ng-container>
                 <span *ngIf="hasChildren() && collapseButton" class="fa" [class.fa-plus]="isCollapsed()"
@@ -30,7 +30,7 @@ import {NestedSearcher} from "../../Service/Impl/NestedSearcher";
                       (click)="toggle()"></span>
                 <div class="parent-node-end"></div>
             </div>
-            <div class="children-list" *ngIf="hasChildren()" [hidden]="!shouldDisplay(item) || isCollapsed()">
+            <div class="children-list" *ngIf="hasChildren() && shouldDisplay(item) && !isCollapsed()">
                 <ng-container *ngFor="let child of item.children">
                     <nested-list [item]="child" [template]="template" [initialCollapse]="initialCollapse"
                                  [searcher]="searcher"
@@ -71,18 +71,20 @@ export class NestedListComponent implements OnInit, OnDestroy {
 
     @Input() containerClass: string = '';
 
+    updateSearch$ = new EventEmitter<string>();
+
     ngOnInit() {
         if (!this.searcher) {
             this.searcher = new NestedSearcher(this.searchBy);
         }
-        this.initialCollapse = this.collapsed;
         let stopListening    = UnsubscribeAll.merge(this.onDestroy$);
         this.onCollapseAll.takeUntil(stopListening).subscribe(() => {
-            this.collapsed = true;
+            this.item.$collapsed = true;
         });
         this.onExpandAll.takeUntil(stopListening).subscribe(() => {
-            this.collapsed = false;
+            this.item.$collapsed = false;
         });
+        this.updateSearch$.debounceTime(1000).takeUntil(stopListening).subscribe((value) => this.updateMatches(value));
 
     }
 
@@ -95,11 +97,11 @@ export class NestedListComponent implements OnInit, OnDestroy {
     }
 
     isCollapsed() {
-        return this.collapsed;
+        return this.item.$collapsed;
     }
 
     toggle() {
-        this.collapsed = !this.collapsed;
+        this.item.$collapsed = !this.item.$collapsed;
     }
 
 
@@ -109,7 +111,7 @@ export class NestedListComponent implements OnInit, OnDestroy {
     }
 
     shouldDisplay(item) {
-        return !this.searcher.isTermLongEnough() || item.$matches || item.$parentMatches || item.$childMatches;
+        return item.$shown;
     }
 
 }

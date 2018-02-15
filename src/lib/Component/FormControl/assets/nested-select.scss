@@ -15,6 +15,18 @@ nested-check-box {
         .form-control, .form-group {
             margin-bottom: 0;
         }
+        div.three-state {
+            padding: 5px;
+            display: flex;
+            align-items:center;
+            .fa {
+                font-size:16px;
+                width: 18px;
+            }
+            span:first-child {
+                flex-grow: 1;
+            }
+        }
         check-box {
             .form-group {
                 border: 1px solid transparent;

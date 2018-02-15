@@ -92,9 +92,7 @@ export class CheckBoxComponent extends NgFormControl<any> implements OnInit, OnD
 
     requiredValidator: RequiredValidator = new RequiredCheckBoxValidator();
 
-    valueDiffer: KeyValueDiffer<string, boolean>;
-
-    constructor(@Inject(Injector) public injector: Injector, public differs: KeyValueDiffers) {
+    constructor(@Inject(Injector) public injector: Injector) {
         super(injector);
         this.additionalValidators = [this.requiredValidator];
     }
@@ -103,26 +101,20 @@ export class CheckBoxComponent extends NgFormControl<any> implements OnInit, OnD
         super.ngOnInit();
         this.onInit.emit();
         this.requiredValidator.required = this.required;
-        this.valueDiffer                = this.differs.find({value: false}).create();
         this.requiredChange.merge(this.stateChange).merge(this.threeStateChange).takeUntil(this.onDestroy$).subscribe(() => {
             this.requiredValidator.required = this.required;
             this.updateState();
             this.value = this.state === 'on' ? this.checkedValue : false;
         });
         this.updateState();
-    }
-
-    ngDoCheck() {
-        if (this.valueDiffer && this.valueDiffer.diff({value: this.value})) {
-            this.updateState();
-        }
+        Observable.interval(1000)
+            .map(() => this.value)
+            .distinctUntilChanged()
+            .takeUntil(this.onDestroy$)
+            .subscribe(() => this.updateState());
     }
 
     onLoad() {
-        if (!this.element || !this.element.nativeElement) {
-            setTimeout(() => this.onLoad(), 500);
-            return;
-        }
         Observable.fromEvent(this.element.nativeElement, 'keypress')
                   .takeUntil(this.onDestroy$)
                   .subscribe((event: KeyboardEvent) => {
