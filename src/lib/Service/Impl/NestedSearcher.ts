@@ -10,7 +10,7 @@ export class NestedSearcher extends Searcher {
         this.updateChildrenForItem$(item, item).subscribe({
             complete: () => {
                 if (!this.isTermLongEnough()) {
-                    item.$shown = true;
+                    item.$shown     = true;
                     item.$collapsed = false;
                 }
             }
@@ -22,7 +22,7 @@ export class NestedSearcher extends Searcher {
         item.$shown         = item.$parentMatches;
         item.$matches       = false;
         item.$childMatches  = false;
-        item.$matches       = this.doesItemMatchSearch(item);
+        item.$matches       = this.isTermLongEnough() && this.doesItemMatchSearch(item);
         item.$collapsed     = false;
     }
 
@@ -31,11 +31,10 @@ export class NestedSearcher extends Searcher {
         if (item.hasOwnProperty('children') && Array.isArray(item['children']) && item['children'].length > 0) {
             return Observable.from(item.children)
                              .filter((child: any) => {
-                                 if (this.isTermLongEnough()) {
-                                     return true;
+                                 if (!this.isTermLongEnough()) {
+                                     child.$collapsed = true;
                                  }
-                                 child.$collapsed = true;
-                                 return false;
+                                 return true;
                              })
                              .flatMap((child: any) => {
                                  this.initializeMetadata(child);
