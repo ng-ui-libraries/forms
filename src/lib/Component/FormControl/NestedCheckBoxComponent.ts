@@ -23,12 +23,13 @@ import {NgFormControl}                                              from '../NgF
                     <nested-list
                             class="form-control-container"
                             [ngClass]="{'ng-invalid':(isInvalid$() | async), 'ng-touched':(touched$ | async), 'ng-valid':!(isInvalid$() | async)}"
-                            [item]="{children: initializedOptions}"
+                            [item]="nestedList"
                             [containerClass]="'form-control expandable ng-control'"
                             [showLines]="false"
                             [onCollapseAll]="onCollapseAll"
                             [onExpandAll]="onExpandAll"
                             [searchBy]="searchBy"
+                            [initialCollapse]="true"
                     >
                         <ng-template let-item>
                             <div class="three-state" [class.active]="selection[item[selectBy]]">
@@ -91,6 +92,8 @@ export class NestedCheckBoxComponent extends NgFormControl<any[]> implements OnI
         }
     }];
 
+    nestedList = {children:[]};
+
     constructor(
         differs: KeyValueDiffers,
         public injector: Injector
@@ -130,6 +133,11 @@ export class NestedCheckBoxComponent extends NgFormControl<any[]> implements OnI
         this.initializedOptions = JSON.parse(JSON.stringify(this.options));
         this.initializeOption(this.initializedOptions).subscribe({
             complete: () => {
+                this.nestedList = {
+                    children: this.initializedOptions
+                };
+                Observable.from(this.nestedList.children)
+                    .subscribe((child) => child.$collapsed = true);
                 this.areOptionsInitialized = true;
             }
         });
@@ -186,7 +194,10 @@ export class NestedCheckBoxComponent extends NgFormControl<any[]> implements OnI
 
     updateChildren$(item) {
         return Observable.from(item.children || [])
-                         .filter((child: any) => child.$shown)
+                         .filter((child: any) => {
+                             console.log(child.$shown, child.$parentMatches, child.name);
+                             return child.$shown;
+                         })
                          .do((child: any) => {
                              if (this.selection[item[this.selectBy]]) {
                                  this.selection[child[this.selectBy]]     = child[this.selectBy];

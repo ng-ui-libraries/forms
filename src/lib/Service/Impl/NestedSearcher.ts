@@ -30,12 +30,6 @@ export class NestedSearcher extends Searcher {
 
         if (item.hasOwnProperty('children') && Array.isArray(item['children']) && item['children'].length > 0) {
             return Observable.from(item.children)
-                             .filter((child: any) => {
-                                 if (!this.isTermLongEnough()) {
-                                     child.$collapsed = true;
-                                 }
-                                 return true;
-                             })
                              .flatMap((child: any) => {
                                  this.initializeMetadata(child);
                                  child.$parentMatches = item.$matches || item.$parentMatches;
@@ -49,7 +43,7 @@ export class NestedSearcher extends Searcher {
                              .toArray()
                              .do((list) => {
                                  item.$shown     = item.$childMatches || item.$parentMatches || item.$matches;
-                                 item.$collapsed = item.$matches || !item.$childMatches;
+                                 item.$collapsed = !this.isTermLongEnough() || item.$matches || !item.$childMatches;
                              });
         }
         item.$shown     = item.$parentMatches || item.$matches;

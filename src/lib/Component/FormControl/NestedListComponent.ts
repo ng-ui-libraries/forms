@@ -1,8 +1,8 @@
 import {
     ViewEncapsulation, Component, Input, ContentChild, TemplateRef, EventEmitter, OnInit, OnDestroy
-} from '@angular/core';
-import {UnsubscribeAll, Value} from "@ng-app-framework/core";
-import {NestedSearcher} from "../../Service/Impl/NestedSearcher";
+}                              from '@angular/core';
+import {UnsubscribeAll, Value} from '@ng-app-framework/core';
+import {NestedSearcher}        from '../../Service/Impl/NestedSearcher';
 
 @Component({
     selector     : 'nested-list',
@@ -77,8 +77,7 @@ export class NestedListComponent implements OnInit, OnDestroy {
         if (!this.searcher) {
             this.searcher = new NestedSearcher(this.searchBy);
         }
-        this.item.$collapsed = this.searcher.isTermLongEnough() ? this.item.$collapsed : this.initialCollapse;
-        let stopListening    = UnsubscribeAll.merge(this.onDestroy$);
+        let stopListening = UnsubscribeAll.merge(this.onDestroy$);
         this.onCollapseAll.takeUntil(stopListening).subscribe(() => {
             this.item.$collapsed = true;
         });
@@ -88,7 +87,6 @@ export class NestedListComponent implements OnInit, OnDestroy {
         this.updateSearch$.debounceTime(1000).takeUntil(stopListening).subscribe((value) => {
             this.updateMatches(value);
         });
-
     }
 
     ngOnDestroy() {
