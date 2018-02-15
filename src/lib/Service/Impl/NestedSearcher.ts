@@ -19,7 +19,7 @@ export class NestedSearcher extends Searcher {
 
     initializeMetadata(item) {
         item.$parentMatches = item.$parentMatches || false;
-        item.$shown         = item.$parentMatches;
+        item.$shown         = item.$parentMatches || !this.isTermLongEnough();
         item.$matches       = false;
         item.$childMatches  = false;
         item.$matches       = this.isTermLongEnough() && this.doesItemMatchSearch(item);
@@ -42,11 +42,11 @@ export class NestedSearcher extends Searcher {
                              })
                              .toArray()
                              .do((list) => {
-                                 item.$shown     = item.$childMatches || item.$parentMatches || item.$matches;
+                                 item.$shown     = !this.isTermLongEnough() || item.$childMatches || item.$parentMatches || item.$matches;
                                  item.$collapsed = !this.isTermLongEnough() || item.$matches || !item.$childMatches;
                              });
         }
-        item.$shown     = item.$parentMatches || item.$matches;
+        item.$shown     = !this.isTermLongEnough() || item.$parentMatches || item.$matches;
         item.$collapsed = true;
         return Observable.from([]);
     }

@@ -136,8 +136,7 @@ export class NestedCheckBoxComponent extends NgFormControl<any[]> implements OnI
                 this.nestedList = {
                     children: this.initializedOptions
                 };
-                Observable.from(this.nestedList.children)
-                    .subscribe((child) => child.$collapsed = true);
+                this.searcher.updateMatches(this.nestedList);
                 this.areOptionsInitialized = true;
             }
         });
