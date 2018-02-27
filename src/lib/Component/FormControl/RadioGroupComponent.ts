@@ -31,7 +31,8 @@ import {NgFormControl} from "../NgFormControl";
                                [checkedValue]="option[bindValue]"
                                [parentFormControl]="control"
                                (ngModelChange)="triggerValidation()"
-                               (onTouch)="control.markAsTouched()"></radio>
+                               (onTouch)="control.markAsTouched()"
+                               tabindex="1"></radio>
                     </ng-container>
                 </div>
             </div>

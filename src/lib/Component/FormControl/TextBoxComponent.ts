@@ -34,6 +34,7 @@ import {NgFormControl}                             from '../NgFormControl';
                            [attr.autocapitalize]="autocapitalize"
                            [attr.autocorrect]="autocorrect"
                            [attr.spellcheck]="spellcheck"
+                           tabindex="1"
                     />
                     <ng-content select=".input-group-append"></ng-content>
                 </div>

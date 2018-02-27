@@ -1,14 +1,14 @@
-import {NgModule} from '@angular/core';
-import {DatePickerComponent} from "./Component/FormControl/DatePickerComponent";
-import {CheckBoxComponent} from "./Component/FormControl/CheckBoxComponent";
-import {NestedListComponent} from "./Component/FormControl/NestedListComponent";
-import {DropDownComponent} from "./Component/FormControl/DropDownComponent";
+import {NgModule}                from '@angular/core';
+import {SelectModule}            from 'ng2-select';
+import {DatePickerComponent}     from "./Component/FormControl/DatePickerComponent";
+import {CheckBoxComponent}       from "./Component/FormControl/CheckBoxComponent";
+import {NestedListComponent}     from "./Component/FormControl/NestedListComponent";
+import {DropDownComponent}       from "./Component/FormControl/DropDownComponent";
 import {NestedCheckBoxComponent} from "./Component/FormControl/NestedCheckBoxComponent";
-import {BsDatepickerModule} from "ngx-bootstrap";
-import {CommonModule} from "@angular/common";
+import {BsDatepickerModule}      from "ngx-bootstrap";
+import {CommonModule}            from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {NgSelectModule} from "@ng-select/ng-select";
 import {EmailComponent} from './Component/FormControl/EmailComponent';
 import {RadioComponent} from "./Component/FormControl/RadioComponent";
 import {RadioGroupComponent} from "./Component/FormControl/RadioGroupComponent";
@@ -40,8 +40,8 @@ import {ValidatorMessenger} from "./Validation/Service/ValidatorMessenger";
         FormsModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
-        NgSelectModule,
-        BsDatepickerModule.forRoot()
+        BsDatepickerModule.forRoot(),
+        SelectModule
     ],
     exports     : [
         CommonModule,

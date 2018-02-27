@@ -32,6 +32,7 @@ import {TextBoxComponent}                                                       
                            [name]="name"
                            [(ngModel)]="value"
                            (blur)="triggerValidation()"
+                           tabindex="1"
                     />
                 </div>
             </div>
