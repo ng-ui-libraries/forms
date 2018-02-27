@@ -32,7 +32,7 @@ import {NgFormControl} from "../NgFormControl";
                                [parentFormControl]="control"
                                (ngModelChange)="triggerValidation()"
                                (onTouch)="control.markAsTouched()"
-                               tabindex="1"></radio>
+                               tabindex="0"></radio>
                     </ng-container>
                 </div>
             </div>

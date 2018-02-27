@@ -26,7 +26,7 @@ import {RequiredCheckBoxValidator} from '../../Validation/Directive/RequiredChec
                 </label>
                 <div></div>
                 <div (click)="nextState()" class="input-group check-container ng-control"
-                     tabindex="1"
+                     tabindex="0"
                      #element
                      [ngClass]="{'ng-invalid': isInvalid$() | async, 'ng-touched':(touched$ | async), 'ng-valid':!(isInvalid$() | async) && (touched$ | async)}">
                     <div class="form-control" *ngIf="labelPlacement === 'before'">

@@ -41,7 +41,7 @@ import {NgFormControl}                             from '../NgFormControl';
                            [disabled]="disabled"
                            [(ngModel)]="value"
                            #input
-                           tabindex="1"
+                           tabindex="0"
 
                            bsDatepicker
                            #dp="bsDatepicker"
