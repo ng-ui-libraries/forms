@@ -21,7 +21,7 @@ import {NgFormControl}                             from '../NgFormControl';
                     <ng-container *ngIf="required">*</ng-container>
                 </label>
                 <div></div>
-                <div class="input-group ng-control"
+                <div class="input-group ng-control" [class.disabled]="disabled"
                      [ngClass]="{'ng-invalid':(isInvalid$() | async), 'ng-touched':(touched$ | async), 'ng-valid':!(isInvalid$() | async) && (touched$ | async)}">
                     <div class="input-group-prepend" *ngIf="isIconProvided() && isIconPlacementBefore()">
                         <div class="input-group-text">
@@ -30,7 +30,6 @@ import {NgFormControl}                             from '../NgFormControl';
                     </div>
                     <ng-select
                             [items]="options"
-                            [disabled]="disabled"
                             [typeahead]="typeahead || null"
                             [bindValue]="selectBy"
                             [bindLabel]="labelField"
@@ -40,7 +39,7 @@ import {NgFormControl}                             from '../NgFormControl';
                             (data)="value = $event"
                             (blur)="triggerValidation()"
                             (change)="triggerValidation()"
-                            tabindex="1"
+                            tabindex="{{disabled ? -1 : 1}}"
                             #ngSelect
                     >
                         <ng-template ng-option-tmp let-item="item">
