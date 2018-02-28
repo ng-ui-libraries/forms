@@ -37,11 +37,9 @@ import {NgFormControl}                             from '../NgFormControl';
                             [bindLabel]="labelField"
                             [multiple]="isMultiple"
                             [placeholder]="placeholder"
-
-                            (data)="value = $event"
+                            
                             (blur)="triggerValidation()"
-                            (change)="triggerValidation()"
-                            #ngSelect
+                            (change)="value = $event; triggerValidation()"
                     >
                         <ng-template ng-option-tmp let-item="item">
                             <ng-container
