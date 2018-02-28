@@ -38,8 +38,9 @@ import {NgFormControl}                             from '../NgFormControl';
                             [multiple]="isMultiple"
                             [placeholder]="placeholder"
                             
+                            [(ngModel)]="value"
                             (blur)="triggerValidation()"
-                            (change)="value = $event; triggerValidation()"
+                            (change)="triggerValidation()"
                     >
                         <ng-template ng-option-tmp let-item="item">
                             <ng-container
