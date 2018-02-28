@@ -23,7 +23,7 @@ import {RequiredCheckBoxValidator} from '../../Validation/Directive/RequiredChec
                     <span *ngIf="required">*</span>
                 </label>
                 <div></div>
-                <div (click)="nextState()" class="input-group check-container ng-control"
+                <div (click)="nextState()" (keyup.enter)="nextState()" (keyup.space)="$event.preventDefault();nextState()" class="input-group check-container ng-control"
                      tabindex="0"
                      #element
                      [ngClass]="{'ng-invalid': isInvalid$() | async, 'ng-touched':(touched$ | async), 'ng-valid':!(isInvalid$() | async) && (touched$ | async)}">
@@ -112,17 +112,6 @@ export class CheckBoxComponent extends NgFormControl<any> implements OnInit, OnD
             .distinctUntilChanged()
             .takeUntil(this.onDestroy$)
             .subscribe(() => this.updateState());
-    }
-
-    onLoad() {
-        Observable.fromEvent(this.element.nativeElement, 'keypress')
-                  .takeUntil(this.onDestroy$)
-                  .subscribe((event: KeyboardEvent) => {
-                      if (event.key === ' ') {
-                          this.nextState();
-                          event.preventDefault();
-                      }
-                  });
     }
 
     nextState() {
