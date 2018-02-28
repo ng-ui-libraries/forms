@@ -5,7 +5,7 @@ import {ValidatorMessenger} from "../Service/ValidatorMessenger";
 @Component({
     selector: 'validation-messages',
     template: `
-        <div class="alert alert-danger" *ngIf="errors !== null">
+        <div class="alert alert-danger validation-messages" *ngIf="errors !== null">
             <ul>
                 <li *ngFor="let key of getKeys()">{{getMessage(key)}}</li>
             </ul>

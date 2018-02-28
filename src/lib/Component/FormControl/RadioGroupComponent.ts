@@ -16,8 +16,6 @@ import {NgFormControl} from "../NgFormControl";
     template     : `
         <ng-container *ngIf="initialized">
             <div class="form-group">
-                <validation-messages *ngIf="(isInvalid$() | async)" [errors]="failures" [label]="label">
-                </validation-messages>
                 <label>
                     {{ label }}
                     <span *ngIf="required">*</span>
@@ -35,6 +33,8 @@ import {NgFormControl} from "../NgFormControl";
                                tabindex="0"></radio>
                     </ng-container>
                 </div>
+                <validation-messages *ngIf="(isInvalid$() | async)" [errors]="failures" [label]="label">
+                </validation-messages>
             </div>
         </ng-container>
     `,

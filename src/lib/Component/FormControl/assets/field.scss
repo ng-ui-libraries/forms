@@ -2,7 +2,9 @@ check-box, nested-list, nested-check-box, date-picker, email {
     display: block;
     position: relative;
 }
-
+.validation-messages {
+    margin-top:10px;
+}
 .form-group {
     .form-control.no-select {
         -webkit-user-select: none;

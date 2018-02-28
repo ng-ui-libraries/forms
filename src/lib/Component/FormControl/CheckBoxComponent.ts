@@ -18,8 +18,6 @@ import {RequiredCheckBoxValidator} from '../../Validation/Directive/RequiredChec
     template     : `
         <ng-container *ngIf="initialized">
             <div class="form-group" [class.validate-input]="shouldValidate" [class.no-validate-input]="!shouldValidate" [class.checked]="value">
-                <validation-messages *ngIf="(isInvalid$() | async)" [errors]="failures$ | async" [label]="label">
-                </validation-messages>
                 <label *ngIf="labelPlacement === 'above'" for="{{identifier}}">
                     {{ label }}
                     <span *ngIf="required">*</span>
@@ -51,6 +49,8 @@ import {RequiredCheckBoxValidator} from '../../Validation/Directive/RequiredChec
                         </label>
                     </div>
                 </div>
+                <validation-messages *ngIf="(isInvalid$() | async)" [errors]="failures" [label]="label">
+                </validation-messages>
             </div>
         </ng-container>
     `,

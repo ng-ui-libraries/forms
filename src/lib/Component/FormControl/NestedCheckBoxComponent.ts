@@ -13,8 +13,6 @@ import {NgFormControl}                                              from '../NgF
     template     : `
         <ng-container *ngIf="initialized">
             <div class="form-group" [class.validate-input]="shouldValidate" [class.no-validate-input]="!shouldValidate">
-                <validation-messages *ngIf="(isInvalid$() | async)" [errors]="failures$ | async" [label]="label">
-                </validation-messages>
                 <label>
                     {{label}}
                 </label>
@@ -43,6 +41,8 @@ import {NgFormControl}                                              from '../NgF
                         </ng-template>
                     </nested-list>
                 </ng-container>
+                <validation-messages *ngIf="(isInvalid$() | async)" [errors]="failures" [label]="label">
+                </validation-messages>
             </div>
         </ng-container>
     `,

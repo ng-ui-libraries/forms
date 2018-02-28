@@ -14,8 +14,6 @@ import {NgFormControl}                             from '../NgFormControl';
                 {{ item[labelField] }}
             </ng-template>
             <div class="form-group" [class.validate-input]="shouldValidate" [class.no-validate-input]="!shouldValidate">
-                <validation-messages *ngIf="(isInvalid$() | async)" [errors]="failures" [label]="label">
-                </validation-messages>
                 <label [attr.for]="identifier">
                     {{ label }}
                     <ng-container *ngIf="required">*</ng-container>
@@ -53,6 +51,8 @@ import {NgFormControl}                             from '../NgFormControl';
                         </div>
                     </div>
                 </div>
+                <validation-messages *ngIf="(isInvalid$() | async)" [errors]="failures" [label]="label">
+                </validation-messages>
             </div>
             <ng-container *ngIf="!areOptionsProvided()">
                 <div class="alert alert-notice">

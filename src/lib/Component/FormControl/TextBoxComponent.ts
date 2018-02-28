@@ -12,8 +12,6 @@ import {NgFormControl}                             from '../NgFormControl';
     template     : `
         <ng-container *ngIf="initialized">
             <div class="form-group" [class.validate-input]="shouldValidate" [class.no-validate-input]="!shouldValidate">
-                <validation-messages *ngIf="(isInvalid$() | async)" [errors]="failures" [label]="label">
-                </validation-messages>
                 <label [attr.for]="identifier" *ngIf="label.length > 0">
                     {{label}}
                     <ng-container *ngIf="required">*</ng-container>
@@ -38,6 +36,8 @@ import {NgFormControl}                             from '../NgFormControl';
                     />
                     <ng-content select=".input-group-append"></ng-content>
                 </div>
+                <validation-messages *ngIf="(isInvalid$() | async)" [errors]="failures" [label]="label">
+                </validation-messages>
             </div>
         </ng-container>
     `,
