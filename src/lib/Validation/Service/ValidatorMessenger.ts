@@ -1,8 +1,9 @@
-import {Injectable} from "@angular/core";
-import {ValidatorResults, ValidatorResult} from "../validate";
+import {Injectable}                        from '@angular/core';
+import {ValidatorResults, ValidatorResult} from '../validate';
 
 @Injectable()
 export class ValidatorMessenger {
+
 
     getPlural(value) {
         return value !== 1 ? 's' : '';
@@ -13,10 +14,10 @@ export class ValidatorMessenger {
             return `${label} is required`;
         },
         pattern  : (result: ValidatorResult, key: string, label: string = '') => {
-            return `Invalid format for ${label}`;
+            return `${label} must be in a valid format`;
         },
         email    : (result: ValidatorResult, key: string, label: string = '') => {
-            return `${label} must be a valid email address.`;
+            return `${label} must be a valid email address`;
         },
         minlength: (result: ValidatorResult, key: string, label: string = '') => {
             let plural = this.getPlural(result['requiredLength']);

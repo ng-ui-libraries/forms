@@ -17,7 +17,7 @@
                [(ngModel)]="phoneForm.part1"
                pattern="\d{3}"
                required
-               (keyup)="phoneForm.part1.length > 2 ? onKeyUp($event, part2) : format()"
+               (keyup)="onKeyUp($event, part1, part2)"
                (change)="format()"
                (blur)="format()"
                [name]="identifier + '-part1'"/>
@@ -29,7 +29,7 @@
                [(ngModel)]="phoneForm.part2"
                pattern="\d{3}"
                required
-               (keyup)="phoneForm.part2.length > 2 ? onKeyUp($event, part3) : format()"
+               (keyup)="onKeyUp($event, part2, part3)"
                (change)="format()"
                (blur)="format()"
                [name]="identifier + '-part2'"/>

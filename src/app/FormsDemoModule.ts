@@ -5,14 +5,15 @@ import {NgFormsModule}                          from '../lib/NgFormsModule';
 import {ConfirmationDemoComponent}              from './Component/ConfirmationDemoComponent';
 import {FormsDemoComponent}                     from './Component/FormsDemoComponent';
 import {CheckBoxDemoComponent}                  from './Component/CheckBoxDemoComponent';
-import {EmailDemoComponent}                     from './Component/EmailDemoComponent';
-import {DatePickerDemoComponent}                from './Component/DatePickerDemoComponent';
-import {DropDownDemoComponent}                  from './Component/DropDownDemoComponent';
-import {IndexComponent}                         from './Component/IndexComponent';
-import {NestedListDemoComponent}                from './Component/NestedListDemoComponent';
-import {NestedCheckBoxDemoComponent}            from './Component/NestedCheckBoxDemoComponent';
-import {RadioDemoComponent}                     from './Component/RadioDemoComponent';
-import {TextBoxDemoComponent}                   from './Component/TextBoxDemoComponent';
+import {EmailDemoComponent}          from './Component/EmailDemoComponent';
+import {DatePickerDemoComponent}     from './Component/DatePickerDemoComponent';
+import {DropDownDemoComponent}       from './Component/DropDownDemoComponent';
+import {IndexComponent}              from './Component/IndexComponent';
+import {NestedListDemoComponent}     from './Component/NestedListDemoComponent';
+import {NestedCheckBoxDemoComponent} from './Component/NestedCheckBoxDemoComponent';
+import {PhoneDemoComponent}          from './Component/PhoneDemoComponent';
+import {RadioDemoComponent}          from './Component/RadioDemoComponent';
+import {TextBoxDemoComponent}        from './Component/TextBoxDemoComponent';
 
 
 export const routes = [
@@ -27,6 +28,10 @@ export const routes = [
             {
                 path     : 'check-box',
                 component: CheckBoxDemoComponent
+            },
+            {
+                path: 'phone',
+                component: PhoneDemoComponent
             },
             {
                 path     : 'match-value',
@@ -76,7 +81,8 @@ export const routes = [
         NestedCheckBoxDemoComponent,
         EmailDemoComponent,
         TextBoxDemoComponent,
-        RadioDemoComponent
+        RadioDemoComponent,
+        PhoneDemoComponent
     ],
     imports     : [
         CommonModule,

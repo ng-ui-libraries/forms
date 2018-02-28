@@ -68,10 +68,10 @@ export class PhoneComponent extends NgFormControl<string> {
         this.control.markAsTouched();
         this.triggerValidation();
     }
-    onKeyUp(event: KeyboardEvent, nextElement) {
-        console.log('triggered');
-        let noSkipOnKeys = ['tab', 'enter', 'backspace', 'arrowleft', 'arrowright', 'shift'];
-        if (noSkipOnKeys.indexOf(event.key.toLowerCase()) === -1 && nextElement) {
+
+    onKeyUp(event: KeyboardEvent, currentElement, nextElement) {
+        let ignoreNextFocusKeys = ['tab', 'enter', 'backspace', 'arrowleft', 'arrowright', 'shift'];
+        if (ignoreNextFocusKeys.indexOf(event.key.toLowerCase()) === -1 && nextElement && (currentElement.selectionStart === 3)) {
             nextElement.focus();
         }
         this.format();

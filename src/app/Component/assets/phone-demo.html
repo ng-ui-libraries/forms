@@ -1,0 +1,17 @@
+<h4>Email Address</h4>
+<h5>Example</h5>
+<div class="card card-body bg-light form-group">
+    <form #testForm="ngForm">
+        <check-box [(ngModel)]="model.required" name="required" label="Is Required" labelPlacement="after"></check-box>
+        <phone [name]="model.name"
+               label="Phone Number"
+               [(ngModel)]="model.value"
+               [parentFormGroup]="testForm.form"
+               [required]="model.required"></phone>
+        <submit-button label="Submit" [formGroup]="testForm.form"></submit-button>
+    </form>
+</div>
+<h5>Data Model</h5>
+<pre class="card card-body bg-light">{{ model | json }}</pre>
+<h5>Markup</h5>
+<pre class="card card-body bg-light">{{ markup }}</pre>
