@@ -28,18 +28,19 @@ import {NgFormControl}                             from '../NgFormControl';
                             <span class="fa fa-{{icon}}"></span>
                         </div>
                     </div>
+                    <input class="form-control" readonly disabled *ngIf="disabled" [ngModel]="getReadOnlyValue()" [name]="name"/>
                     <ng-select
+                            *ngIf="!disabled"
                             [items]="options"
                             [typeahead]="typeahead || null"
                             [bindValue]="selectBy"
                             [bindLabel]="labelField"
                             [multiple]="isMultiple"
                             [placeholder]="placeholder"
-                            
+
                             (data)="value = $event"
                             (blur)="triggerValidation()"
                             (change)="triggerValidation()"
-                            tabindex="{{disabled ? -1 : 1}}"
                             #ngSelect
                     >
                         <ng-template ng-option-tmp let-item="item">
@@ -147,6 +148,11 @@ export class DropDownComponent extends NgFormControl<any> implements OnInit, OnD
 
     isIconPlacementBefore() {
         return this.iconPlacement === 'before';
+    }
+
+    getReadOnlyValue() {
+        let textValues = this.options.filter((value) => value[this.selectBy] === this.value);
+        return textValues.length > 0 ? textValues[0][this.labelField] : '';
     }
 }
 
