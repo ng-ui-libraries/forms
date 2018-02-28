@@ -24,7 +24,7 @@ export class PhoneComponent extends NgFormControl<string> {
     @Input() parentFormControl: FormControl;
     @Input() parentFormGroup: FormGroup;
 
-    additionalValidators = [
+    additionalValidators = <any[]>[
         Validators.pattern('\\d{3}\\-\\d{3}\\-\\d{4}')
     ];
 
