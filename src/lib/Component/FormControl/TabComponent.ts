@@ -6,9 +6,7 @@ import {Component, EventEmitter, Input, Output, ViewEncapsulation} from '@angula
     template     : `
         <li class="nav-item">
             <a class="nav-link"
-               (keyup.enter)="trigger.emit()"
-               (keyup.space)="trigger.emit()"
-               (click)="trigger.emit()"
+               (activate)="trigger.emit()"
                [class.active]="isActive"
                tabindex="0">
                 <ng-content></ng-content>

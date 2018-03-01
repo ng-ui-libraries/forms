@@ -15,6 +15,9 @@
         margin-bottom: 20px;
     }
 </style>
+<ul class="nav nav-tabs">
+    <tab (trigger)="log('Worked!')">Sample Tab</tab>
+</ul>
 <div class="container-fluid">
     <div class="row flex-xl-nowrap">
         <div class="col-12 col-md-3 col-xl-2 nav-sidebar bg-light">
@@ -28,7 +31,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <div class="navbar-nav flex-column">
                         <div class="nav-brand">Components</div>
-                        <a class="nav-link" routerLink="check-box" routerLinkActive="active">Check Box</a>
+                        <a class="nav-link" routerLink="check-box" routerLinkActive="active" tabindex="0" (activate)="log('Worked!')">Check Box</a>
                         <a class="nav-link" routerLink="nested-check-box" routerLinkActive="active">
                             Nested Check Box
                         </a>

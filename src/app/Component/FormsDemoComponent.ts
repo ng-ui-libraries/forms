@@ -16,4 +16,8 @@ export class FormsDemoComponent {
         return ['', 'forms', path];
     }
 
+    log(value) {
+        console.log(value);
+    }
+
 }
