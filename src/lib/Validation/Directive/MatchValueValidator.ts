@@ -1,7 +1,7 @@
-import {Directive, forwardRef, Input} from "@angular/core";
-import {AbstractControl, NG_VALIDATORS, RequiredValidator, Validators} from "@angular/forms";
-import {ValidatorMessenger} from "../Service/ValidatorMessenger";
-import {ValidatorResults} from "../validate";
+import {Directive, forwardRef, Input}                                  from '@angular/core';
+import {AbstractControl, NG_VALIDATORS, RequiredValidator, Validators} from '@angular/forms';
+import {ValidatorMessenger}                                            from '../Service/ValidatorMessenger';
+import {ValidatorResults}                                              from '../validate';
 
 @Directive({
     selector :
@@ -15,13 +15,17 @@ import {ValidatorResults} from "../validate";
 export class MatchValueValidator {
 
     @Input() matchValue = {
-        label: '',
-        value: ''
+        label  : '',
+        value  : '',
+        message: ''
     };
 
     constructor(messenger: ValidatorMessenger) {
         if (!messenger.messages.hasOwnProperty('matchValue')) {
             messenger.messages['matchValue'] = (result: ValidatorResults, key: string, label: string = '') => {
+                if (result['message'].length > 0) {
+                    return <string>result.message;
+                }
                 return `${label} must match ${result.matchLabel}`;
             };
         }
@@ -35,6 +39,7 @@ export class MatchValueValidator {
             matchValue: {
                 expectedValue: this.matchValue.value,
                 matchLabel   : this.matchValue.label,
+                message      : this.matchValue.message || '',
                 actualValue  : c.value
             }
         } : null;

@@ -23,7 +23,7 @@ import {RequiredCheckBoxValidator} from '../../Validation/Directive/RequiredChec
                     <span *ngIf="required">*</span>
                 </label>
                 <div></div>
-                <div (click)="nextState()" (keyup.enter)="nextState()" (keyup.space)="$event.preventDefault();nextState()" class="input-group check-container ng-control"
+                <div (click)="nextState()" (keyup.enter)="nextState()" (keyup.space)="nextState()" class="input-group check-container ng-control"
                      tabindex="0"
                      #element
                      [ngClass]="{'ng-invalid': isInvalid$() | async, 'ng-touched':(touched$ | async), 'ng-valid':!(isInvalid$() | async) && (touched$ | async)}">
