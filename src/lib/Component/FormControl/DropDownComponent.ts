@@ -35,7 +35,7 @@ import {NgFormControl}                             from '../NgFormControl';
                             [bindLabel]="labelField"
                             [multiple]="isMultiple"
                             [placeholder]="placeholder"
-                            [attr.appendTo]="appendTo.length > 0 ? appendTo : null"
+                            [appendTo]="appendTo.length > 0 ? appendTo : null"
 
                             [(ngModel)]="value"
                             (blur)="triggerValidation()"
