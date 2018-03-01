@@ -35,7 +35,8 @@ import {NgFormControl}                             from '../NgFormControl';
                             [bindLabel]="labelField"
                             [multiple]="isMultiple"
                             [placeholder]="placeholder"
-                            
+                            [appendTo]="appendTo.length > 0 ? appendTo : null"
+
                             [(ngModel)]="value"
                             (blur)="triggerValidation()"
                             (change)="triggerValidation()"
@@ -93,6 +94,7 @@ export class DropDownComponent extends NgFormControl<any> implements OnInit, OnD
 
     @Input() name: string                                    = '';
     @Input() label: string                                   = '';
+    @Input() appendTo: string                                = '';
     @Input() required: boolean                               = false;
     @Input() disabled: boolean                               = false;
     @Input() placeholder                                     = 'Select ...';
