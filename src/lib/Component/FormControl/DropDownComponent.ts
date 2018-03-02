@@ -62,7 +62,7 @@ import {NgFormControl}                             from '../NgFormControl';
             </ng-container>
         </ng-container>
     `,
-    styleUrls    : ['./assets/ng2-select.scss'],
+    styleUrls    : ['./assets/ng-select.scss'],
     providers    : [
         {
             provide    : NG_VALUE_ACCESSOR,
