@@ -1,5 +1,4 @@
 @import "field";
-@import "~@ng-select/ng-select/themes/default.theme.css";
 /* Style when highlighting a search. */
 .ui-select-highlight {
     font-weight: bold;
@@ -296,6 +295,9 @@ body > .ui-select-bootstrap.open {
                 width: 100%;
                 display: inline-block;
                 border-radius: 0;
+            }
+            input[type=text] {
+                width: 100%;
             }
         }
     }
