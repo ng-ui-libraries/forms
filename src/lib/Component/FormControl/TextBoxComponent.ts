@@ -32,6 +32,7 @@ import {NgFormControl}                             from '../NgFormControl';
                            [attr.autocapitalize]="autocapitalize"
                            [attr.autocorrect]="autocorrect"
                            [attr.spellcheck]="spellcheck"
+                           [attr.data-lpignore]="disableLastPass || null"
                            tabindex="0"
                     />
                     <ng-content select=".input-group-append"></ng-content>
@@ -63,6 +64,8 @@ export class TextBoxComponent extends NgFormControl<string> {
     @Output() inputClick                 = new EventEmitter<any>();
     @Output() inputFocusOut              = new EventEmitter<any>();
     @Output() inputFocus                 = new EventEmitter<any>();
+
+    @Input() disableLastPass = false;
 
 
     @Input() type: string   = 'text';
