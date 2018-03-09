@@ -41,6 +41,10 @@ import {NgFormControl}                             from '../NgFormControl';
                             (blur)="triggerValidation()"
                             (change)="triggerValidation()"
                     >
+                        <ng-template ng-label-tmp let-item="item">
+                            <ng-container
+                                    *ngTemplateOutlet="template ? template : defaultOption;context:{$implicit: item}"></ng-container>
+                        </ng-template>
                         <ng-template ng-option-tmp let-item="item">
                             <ng-container
                                     *ngTemplateOutlet="template ? template : defaultOption;context:{$implicit: item}"></ng-container>
