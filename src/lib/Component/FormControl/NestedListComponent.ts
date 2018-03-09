@@ -11,11 +11,19 @@ import {NestedSearcher}        from '../../Service/Impl/NestedSearcher';
             <div class="nested-list-element">{{ item.name ? item.name : item.text}}</div>
         </ng-template>
         <ng-container *ngIf="isTop && searchable">
-            <text-box name="nested-search" class="full-width"
-                      [(ngModel)]="searcher.search"
-                      (ngModelChange)="searcher.isTermLongEnough() && updateMatches()"
-                      placeholder="Search ..." icon="search"
-                      shouldValidate="false"></text-box>
+            <div class="form-group">
+                <div class="input-group w-100">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <span class="fa fa-search"></span>
+                        </div>
+                    </div>
+                    <input type="text" class="form-control w-100" name="nested-search"
+                           [(ngModel)]="searcher.search"
+                           (ngModelChange)="searcher.isTermLongEnough() && updateMatches()"
+                           placeholder="Search ..."/>
+                </div>
+            </div>
         </ng-container>
         <div class="loading-icon" *ngIf="isUpdating()">
             <span class="fa fa-spinner fa-spin"></span>
@@ -73,7 +81,6 @@ export class NestedListComponent implements OnInit, OnDestroy {
     @Input() searchable: boolean = true;
 
     @Input() containerClass: string = '';
-
 
 
     ngOnInit() {
