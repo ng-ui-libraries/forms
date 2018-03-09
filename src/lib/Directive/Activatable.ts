@@ -8,16 +8,6 @@ export class Activatable {
     activate = new EventEmitter<any>();
 
     constructor(private el: ElementRef) {
-        if (!spaceScrollStopped) {
-            window.addEventListener('keydown', function (e) {
-                if (e.keyCode === 32 && ['TEXTAREA', 'INPUT'].indexOf(e.target['tagName']) === -1) {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    return false;
-                }
-                return true;
-            });
-        }
     }
 
     @HostListener('keyup', ['$event']) onKeyUp($event) {
@@ -36,5 +26,3 @@ export class Activatable {
         return false;
     }
 }
-
-let spaceScrollStopped = false;
