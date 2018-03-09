@@ -54,7 +54,7 @@ import {NgFormControl}                                              from '../NgF
     }],
     encapsulation: ViewEncapsulation.None
 })
-export class NestedCheckBoxComponent extends NgFormControl<any[]> implements OnInit, OnDestroy, DoCheck {
+export class NestedCheckBoxComponent extends NgFormControl<any[]> implements OnInit, OnDestroy {
 
 
     @Input() name: string                = null;
@@ -80,8 +80,6 @@ export class NestedCheckBoxComponent extends NgFormControl<any[]> implements OnI
     protected indeterminate: { [key: string]: any } = {};
     protected searcher: NestedSearcher;
 
-    protected selectionDiffer: KeyValueDiffer<string, boolean>;
-
     additionalValidators = [{
         validate: (control: AbstractControl) => {
             if (this.required && (!control.value || control.value.length === 0)) {
@@ -94,13 +92,10 @@ export class NestedCheckBoxComponent extends NgFormControl<any[]> implements OnI
     nestedList = {children: []};
 
     constructor(
-        differs: KeyValueDiffers,
         public injector: Injector
     ) {
         super(injector);
-        this.selectionDiffer = differs.find({}).create();
     }
-
 
 
     initializeOption(list, parent = null) {
@@ -124,13 +119,6 @@ export class NestedCheckBoxComponent extends NgFormControl<any[]> implements OnI
         super.ngOnInit();
         this.nestedList.children = this.options;
         this.searcher            = new NestedSearcher(this.searchBy);
-    }
-
-    ngDoCheck() {
-        const changes = this.selectionDiffer.diff(this.selection);
-        if (changes) {
-            this.value = Object.keys(this.selection).filter(key => this.selection[key]);
-        }
     }
 
     shouldBold$(item) {
