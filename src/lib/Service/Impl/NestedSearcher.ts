@@ -4,34 +4,42 @@ import {Async, Value} from '@ng-app-framework/core';
 
 export class NestedSearcher extends Searcher {
 
+    isUpdating = false;
+
+    all = {};
 
     updateMatches(item) {
-        this.initializeMetadata(item);
-        this.updateChildrenForItem$(item, item).subscribe({
-            complete: () => {
-                if (!this.isTermLongEnough()) {
-                    item.$shown     = true;
-                    item.$collapsed = false;
+        this.isUpdating = true;
+        setTimeout(() => {
+            this.initializeMetadata(item);
+            this.updateChildrenForItem$(item, item).subscribe({
+                complete: () => {
+                    if (!this.isTermLongEnough()) {
+                        item.$shown     = true;
+                        item.$collapsed = false;
+                    }
+                    this.isUpdating = false;
                 }
-            }
-        });
+            });
+        }, 500);
     }
 
-    initializeMetadata(item) {
-        item.$parentMatches = item.$parentMatches || false;
-        item.$shown         = item.$parentMatches || !this.isTermLongEnough();
-        item.$matches       = false;
-        item.$childMatches  = false;
-        item.$matches       = this.isTermLongEnough() && this.doesItemMatchSearch(item);
-        item.$collapsed     = false;
+    initializeMetadata(item, parent?: any) {
+        this.all[item.id || item.constant] = item;
+        item.parent                        = parent ? parent.id || parent.constant : null;
+        item.$parentMatches                = item.$parentMatches || false;
+        item.$shown                        = item.$parentMatches || !this.isTermLongEnough();
+        item.$matches                      = false;
+        item.$childMatches                 = false;
+        item.$matches                      = this.isTermLongEnough() && this.doesItemMatchSearch(item);
+        item.$collapsed                    = false;
     }
 
     updateChildrenForItem$(item, top) {
-
         if (item.hasOwnProperty('children') && Array.isArray(item['children']) && item['children'].length > 0) {
             return Observable.from(item.children)
                              .flatMap((child: any) => {
-                                 this.initializeMetadata(child);
+                                 this.initializeMetadata(child, item);
                                  child.$parentMatches = item.$matches || item.$parentMatches;
                                  return Observable.of(child).concat(this.updateChildrenForItem$(child, top));
                              })
@@ -53,15 +61,15 @@ export class NestedSearcher extends Searcher {
 
     updateParentChildMatches(item) {
         if (item.parent) {
-            item.parent.$childMatches = true;
-            this.updateParentChildMatches(item.parent);
+            this.all[item.parent].$childMatches = true;
+            this.updateParentChildMatches(this.all[item.parent]);
         }
     }
 
     doesParentMatchSearch$(item) {
         if (item.parent) {
-            if (!this.doesItemMatchSearch(item.parent)) {
-                return this.doesParentMatchSearch$(item.parent);
+            if (!this.doesItemMatchSearch(this.all[item.parent])) {
+                return this.doesParentMatchSearch$(this.all[item.parent]);
             }
             return Async.getObservableForValue$(true);
         }

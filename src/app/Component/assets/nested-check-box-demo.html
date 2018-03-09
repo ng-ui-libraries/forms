@@ -19,6 +19,6 @@
     </form>
 </div>
 <h5>Data Model</h5>
-<pre class="card card-body bg-light">{{ model | json }}</pre>
+<pre class="card card-body bg-light" *ngIf="initialized">{{ model ? (model | json) : '' }}</pre>
 <h5>Markup</h5>
 <pre class="card card-body bg-light">{{ markup }}</pre>

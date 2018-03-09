@@ -20,6 +20,11 @@ nested-list {
     .bold {
         font-weight: bold;
     }
+    .loading-icon {
+        text-align:center;
+        padding:5px;
+        font-size: 24px;
+    }
     .parent-node {
         position: relative;
         max-width: 100%;

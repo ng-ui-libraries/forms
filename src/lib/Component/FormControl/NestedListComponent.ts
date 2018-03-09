@@ -17,7 +17,10 @@ import {NestedSearcher}        from '../../Service/Impl/NestedSearcher';
                       placeholder="Search ..." icon="search"
                       shouldValidate="false"></text-box>
         </ng-container>
-        <div class="nested-list-container {{containerClass}}" [class.top]="isTop">
+        <div class="loading-icon" *ngIf="isUpdating()">
+            <span class="fa fa-spinner fa-spin"></span>
+        </div>
+        <div class="nested-list-container {{containerClass}}" [class.top]="isTop" *ngIf="!isUpdating()">
             <div class="parent-node" [class.has-children]="!isCollapsed() && hasChildren()"
                  [class.show-lines]="showLines"
                  [class.bold]="item['$matches']"
@@ -73,6 +76,8 @@ export class NestedListComponent implements OnInit, OnDestroy {
 
     updateSearch$ = new EventEmitter<string>();
 
+
+
     ngOnInit() {
         if (!this.searcher) {
             this.searcher = new NestedSearcher(this.searchBy);
@@ -84,9 +89,18 @@ export class NestedListComponent implements OnInit, OnDestroy {
         this.onExpandAll.takeUntil(stopListening).subscribe(() => {
             this.item.$collapsed = false;
         });
-        this.updateSearch$.debounceTime(1000).takeUntil(stopListening).subscribe((value) => {
-            this.updateMatches(value);
-        });
+        if (this.isTop) {
+            this.searcher.isUpdating = true;
+            this.updateSearch$
+                .debounceTime(500)
+                .takeUntil(stopListening)
+                .subscribe((value) => {
+                    this.updateMatches();
+                });
+            setTimeout(() => {
+                this.updateMatches();
+            }, 500);
+        }
     }
 
     ngOnDestroy() {
@@ -106,13 +120,16 @@ export class NestedListComponent implements OnInit, OnDestroy {
     }
 
 
-    updateMatches($event) {
-        this.searcher.search = $event;
+    updateMatches() {
         this.searcher.updateMatches(this.item);
     }
 
     shouldDisplay(item) {
-        return !this.searcher.isTermLongEnough() || item.$shown;
+        return item.$shown;
+    }
+
+    isUpdating() {
+        return this.searcher.isUpdating;
     }
 
 }

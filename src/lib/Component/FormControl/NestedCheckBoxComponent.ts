@@ -27,12 +27,12 @@ import {NgFormControl}                                              from '../NgF
                             [onCollapseAll]="onCollapseAll"
                             [onExpandAll]="onExpandAll"
                             [searchBy]="searchBy"
-                            [initialCollapse]="true"
+                            [collapsed]="true"
                     >
                         <ng-template let-item>
                             <div class="three-state" [class.active]="selection[item[selectBy]]">
                                 <span>{{item.name}}</span>
-                                <button class="btn btn-sm btn-outline-primary" type="button" (click)="click(item)" >
+                                <button class="btn btn-sm btn-outline-primary" type="button" (click)="click(item)">
                                 <span class="fa" [class.fa-square-o]="!selection[item[selectBy]] && !indeterminate[item[selectBy]]"
                                       [class.fa-check-square-o]="selection[item[selectBy]]"
                                       [class.fa-minus-square-o]="indeterminate[item[selectBy]]"></span>
@@ -78,7 +78,6 @@ export class NestedCheckBoxComponent extends NgFormControl<any[]> implements OnI
 
     protected selection: { [key: string]: any }     = {};
     protected indeterminate: { [key: string]: any } = {};
-    protected initializedOptions                    = [];
     protected searcher: NestedSearcher;
 
     protected selectionDiffer: KeyValueDiffer<string, boolean>;
@@ -92,7 +91,7 @@ export class NestedCheckBoxComponent extends NgFormControl<any[]> implements OnI
         }
     }];
 
-    nestedList = {children:[]};
+    nestedList = {children: []};
 
     constructor(
         differs: KeyValueDiffers,
@@ -102,7 +101,6 @@ export class NestedCheckBoxComponent extends NgFormControl<any[]> implements OnI
         this.selectionDiffer = differs.find({}).create();
     }
 
-    areOptionsInitialized = false;
 
 
     initializeOption(list, parent = null) {
@@ -123,28 +121,14 @@ export class NestedCheckBoxComponent extends NgFormControl<any[]> implements OnI
     }
 
     ngOnInit() {
-        this.areOptionsInitialized = false;
         super.ngOnInit();
-        this.searcher = new NestedSearcher(this.searchBy);
-        this.initializeOptions();
-    }
-
-    initializeOptions() {
-        this.initializedOptions = JSON.parse(JSON.stringify(this.options));
-        this.initializeOption(this.initializedOptions).subscribe({
-            complete: () => {
-                this.nestedList = {
-                    children: this.initializedOptions
-                };
-                this.searcher.updateMatches(this.nestedList);
-                this.areOptionsInitialized = true;
-            }
-        });
+        this.nestedList.children = this.options;
+        this.searcher            = new NestedSearcher(this.searchBy);
     }
 
     ngDoCheck() {
         const changes = this.selectionDiffer.diff(this.selection);
-        if (changes && this.areOptionsInitialized) {
+        if (changes) {
             this.value = Object.keys(this.selection).filter(key => this.selection[key]);
         }
     }
