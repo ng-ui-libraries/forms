@@ -124,7 +124,7 @@ export class NestedListComponent implements OnInit, OnDestroy {
     }
 
     shouldDisplay(item) {
-        return item.$shown;
+        return !this.searcher.isTermLongEnough() || item.$shown;
     }
 
     isUpdating() {
