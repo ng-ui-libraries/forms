@@ -20,7 +20,7 @@ import {NestedSearcher}        from '../../Service/Impl/NestedSearcher';
                     </div>
                     <input type="text" class="form-control w-100" name="nested-search"
                            [(ngModel)]="searcher.search"
-                           (ngModelChange)="searcher.isTermLongEnough() && updateMatches()"
+                           (ngModelChange)="updateMatches()"
                            placeholder="Search ..."/>
                 </div>
             </div>
