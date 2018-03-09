@@ -41,7 +41,7 @@ import {NgFormControl}                             from '../NgFormControl';
                             (blur)="triggerValidation()"
                             (change)="triggerValidation()"
                     >
-                        <ng-template ng-label-tmp let-item="item">
+                        <ng-template ng-label-tmp let-item="item" *ngIf="!isMultiple">
                             <ng-container
                                     *ngTemplateOutlet="template ? template : defaultOption;context:{$implicit: item}"></ng-container>
                         </ng-template>
