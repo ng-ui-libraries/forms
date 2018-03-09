@@ -13,17 +13,15 @@ import {NestedSearcher}        from '../../Service/Impl/NestedSearcher';
         <ng-container *ngIf="isTop && searchable">
             <div class="form-group">
                 <div class="input-group w-100">
-                    <input type="text" class="form-control w-100" name="nested-search"
-                           [(ngModel)]="searcher.search"
-                           (keyup.enter)="searcher.isTermLongEnough() && updateMatches()"
-                           placeholder="Search ..."/>
-                    <div class="input-group-append">
-                        <div class="input-group-button">
-                            <button class="btn btn-outline-primary" (click)="searcher.isTermLongEnough() && updateMatches()">
-                                <span class="fa fa-search"></span>
-                            </button>
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <span class="fa fa-search"></span>
                         </div>
                     </div>
+                    <input type="text" class="form-control w-100" name="nested-search"
+                           [(ngModel)]="searcher.search"
+                           (ngModelChange)="searcher.isTermLongEnough() && updateMatches()"
+                           placeholder="Search ..."/>
                 </div>
             </div>
         </ng-container>
