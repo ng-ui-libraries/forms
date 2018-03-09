@@ -25,14 +25,16 @@ export class NestedSearcher extends Searcher {
     }
 
     initializeMetadata(item, parent?: any) {
-        this.all[item.id || item.constant] = item;
-        item.parent                        = parent ? parent.id || parent.constant : null;
-        item.$parentMatches                = item.$parentMatches || false;
-        item.$shown                        = item.$parentMatches || !this.isTermLongEnough();
-        item.$matches                      = false;
-        item.$childMatches                 = false;
-        item.$matches                      = this.isTermLongEnough() && this.doesItemMatchSearch(item);
-        item.$collapsed                    = false;
+        if (!this.all.hasOwnProperty(item.id || item.constant)) {
+            this.all[item.id || item.constant] = item;
+        }
+        item.parent         = parent ? parent.id || parent.constant : null;
+        item.$parentMatches = item.$parentMatches || false;
+        item.$shown         = item.$parentMatches || !this.isTermLongEnough();
+        item.$matches       = false;
+        item.$childMatches  = false;
+        item.$matches       = this.isTermLongEnough() && this.doesItemMatchSearch(item);
+        item.$collapsed     = false;
     }
 
     updateChildrenForItem$(item, top) {

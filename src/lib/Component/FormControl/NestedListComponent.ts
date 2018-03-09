@@ -13,7 +13,7 @@ import {NestedSearcher}        from '../../Service/Impl/NestedSearcher';
         <ng-container *ngIf="isTop && searchable">
             <text-box name="nested-search" class="full-width"
                       [(ngModel)]="searcher.search"
-                      (ngModelChange)="updateSearch$.emit($event)"
+                      (ngModelChange)="searcher.isTermLongEnough() && updateMatches()"
                       placeholder="Search ..." icon="search"
                       shouldValidate="false"></text-box>
         </ng-container>
@@ -74,8 +74,6 @@ export class NestedListComponent implements OnInit, OnDestroy {
 
     @Input() containerClass: string = '';
 
-    updateSearch$ = new EventEmitter<string>();
-
 
 
     ngOnInit() {
@@ -91,12 +89,6 @@ export class NestedListComponent implements OnInit, OnDestroy {
         });
         if (this.isTop) {
             this.searcher.isUpdating = true;
-            this.updateSearch$
-                .debounceTime(500)
-                .takeUntil(stopListening)
-                .subscribe((value) => {
-                    this.updateMatches();
-                });
             setTimeout(() => {
                 this.updateMatches();
             }, 500);
