@@ -27,6 +27,7 @@ import {TextBoxComponent}                                                       
                            type="text"
                            [placeholder]="placeholder || ''"
                            [id]="identifier"
+                           [disabled]="disabled"
                            [name]="name"
                            [(ngModel)]="value"
                            (blur)="triggerValidation()"

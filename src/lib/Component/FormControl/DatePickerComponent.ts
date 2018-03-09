@@ -27,7 +27,7 @@ import {NgFormControl}                             from '../NgFormControl';
                 <div></div>
                 <div class="input-group ng-control"
                      [ngClass]="{'ng-invalid':(isInvalid$() | async), 'ng-touched':(touched$ | async), 'ng-valid':!(isInvalid$() | async)}">
-                    <div class="input-group-before clickable" (click)="open()">
+                    <div class="input-group-before clickable" (click)="!disabled && open()">
                         <div class="input-group-text">
                             <span class="fa fa-calendar"></span>
                         </div>
