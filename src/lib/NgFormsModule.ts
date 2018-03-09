@@ -74,4 +74,15 @@ import {ValidatorMessenger}          from './Validation/Service/ValidatorMesseng
     ]
 })
 export class NgFormsModule {
+
+    constructor() {
+        window.addEventListener('keydown', function (e) {
+            if (e.keyCode === 32 && ['TEXTAREA', 'INPUT'].indexOf(e.target['tagName']) === -1) {
+                e.stopPropagation();
+                e.preventDefault();
+                return false;
+            }
+            return true;
+        });
+    }
 }
