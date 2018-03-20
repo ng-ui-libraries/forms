@@ -3,7 +3,7 @@ import {ValidatorMessenger} from "../Service/ValidatorMessenger";
 
 
 @Component({
-    selector: 'validation-messages',
+    selector: 'form-validation-messages',
     template: `
         <div class="alert alert-danger validation-messages" *ngIf="errors !== null">
             <ul>
