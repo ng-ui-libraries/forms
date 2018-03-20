@@ -8,7 +8,7 @@ import {ValidatorMessenger} from '../Service/ValidatorMessenger';
         <div class="alert alert-danger validation-messages" *ngIf="errors !== null">
             <ul>
                 <ng-container *ngFor="let field of getKeys(errors)">
-                    <li *ngFor="let errorKey of errors[field]">
+                    <li *ngFor="let errorKey of getKeys(errors[field])">
                         {{getMessage(field, errors[field], errorKey)}}
                     </li>
                 </ng-container>
