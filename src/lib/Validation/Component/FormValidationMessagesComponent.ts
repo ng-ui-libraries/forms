@@ -16,7 +16,7 @@ import {ValidatorMessenger} from '../Service/ValidatorMessenger';
         </div>
     `
 })
-export class ValidationMessagesComponent {
+export class FormValidationMessagesComponent {
     @Input() errors: { [key: string]: { [key: string]: boolean } };
 
     constructor(public messenger: ValidatorMessenger) {
