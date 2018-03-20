@@ -1,30 +1,34 @@
-import {Component, Input} from '@angular/core';
-import {ValidatorMessenger} from "../Service/ValidatorMessenger";
+import {Component, Input}   from '@angular/core';
+import {ValidatorMessenger} from '../Service/ValidatorMessenger';
 
 
 @Component({
-    selector: 'validation-messages',
+    selector: 'form-validation-messages',
     template: `
         <div class="alert alert-danger validation-messages" *ngIf="errors !== null">
             <ul>
-                <li *ngFor="let key of getKeys()">{{getMessage(key)}}</li>
+                <ng-container *ngFor="let field of getKeys(errors)">
+                    <li *ngFor="let errorKey of errors[field]">
+                        {{getMessage(field, errors[field], errorKey)}}
+                    </li>
+                </ng-container>
             </ul>
         </div>
     `
 })
 export class ValidationMessagesComponent {
-    @Input() errors: { [key: string]: boolean };
+    @Input() errors: { [key: string]: { [key: string]: boolean } };
     @Input() label: string = '';
 
     constructor(public messenger: ValidatorMessenger) {
 
     }
 
-    getKeys() {
-        return Object.keys(this.errors)
+    getKeys(object) {
+        return Object.keys(object);
     }
 
-    getMessage(key) {
-        return this.messenger.getMessageForError(this.errors, key, this.label);
+    getMessage(label, errors, key) {
+        return this.messenger.getMessageForError(errors, key, label);
     }
 }

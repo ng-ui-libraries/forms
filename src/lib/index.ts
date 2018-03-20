@@ -12,6 +12,7 @@ export * from './Component/FormControl/EmailComponent';
 export * from './Component/NgFormControl';
 export * from './Component/SubmitButtonComponent';
 export * from './Validation/Component/ValidationMessagesComponent';
+export * from './Validation/Component/FormValidationMessagesComponent';
 export * from './Validation/Directive/MatchValueValidator';
 export * from './Validation/Directive/RequiredCheckBoxValidator';
 export * from './Validation/Service/ValidatorMessenger';

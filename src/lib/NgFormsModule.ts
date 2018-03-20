@@ -8,19 +8,20 @@ import {BsDatepickerModule}               from 'ngx-bootstrap';
 import {CommonModule}                     from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule}     from '@angular/platform-browser/animations';
-import {NgSelectModule}              from '@ng-select/ng-select';
-import {EmailComponent}              from './Component/FormControl/EmailComponent';
-import {PhoneComponent}              from './Component/FormControl/PhoneComponent';
-import {RadioComponent}              from './Component/FormControl/RadioComponent';
-import {RadioGroupComponent}         from './Component/FormControl/RadioGroupComponent';
-import {TabComponent}                from './Component/FormControl/TabComponent';
-import {Activatable}                 from './Directive/Activatable';
-import {ValidationMessagesComponent} from './Validation/Component/ValidationMessagesComponent';
-import {RequiredCheckBoxValidator}   from './Validation/Directive/RequiredCheckBoxValidator';
-import {SubmitButtonComponent}       from './Component/SubmitButtonComponent';
-import {TextBoxComponent}            from './Component/FormControl/TextBoxComponent';
-import {MatchValueValidator}         from './Validation/Directive/MatchValueValidator';
-import {ValidatorMessenger}          from './Validation/Service/ValidatorMessenger';
+import {NgSelectModule}                  from '@ng-select/ng-select';
+import {EmailComponent}                  from './Component/FormControl/EmailComponent';
+import {PhoneComponent}                  from './Component/FormControl/PhoneComponent';
+import {RadioComponent}                  from './Component/FormControl/RadioComponent';
+import {RadioGroupComponent}             from './Component/FormControl/RadioGroupComponent';
+import {TabComponent}                    from './Component/FormControl/TabComponent';
+import {Activatable}                     from './Directive/Activatable';
+import {FormValidationMessagesComponent} from './Validation/Component/FormValidationMessagesComponent';
+import {ValidationMessagesComponent}     from './Validation/Component/ValidationMessagesComponent';
+import {RequiredCheckBoxValidator}       from './Validation/Directive/RequiredCheckBoxValidator';
+import {SubmitButtonComponent}           from './Component/SubmitButtonComponent';
+import {TextBoxComponent}                from './Component/FormControl/TextBoxComponent';
+import {MatchValueValidator}             from './Validation/Directive/MatchValueValidator';
+import {ValidatorMessenger}              from './Validation/Service/ValidatorMessenger';
 
 @NgModule({
     declarations: [
@@ -31,6 +32,7 @@ import {ValidatorMessenger}          from './Validation/Service/ValidatorMesseng
         DropDownComponent,
         EmailComponent,
         ValidationMessagesComponent,
+        FormValidationMessagesComponent,
         RequiredCheckBoxValidator,
         SubmitButtonComponent,
         TextBoxComponent,
@@ -66,7 +68,9 @@ import {ValidatorMessenger}          from './Validation/Service/ValidatorMesseng
         RadioComponent,
         PhoneComponent,
         TabComponent,
-        Activatable
+        Activatable,
+        ValidationMessagesComponent,
+        FormValidationMessagesComponent
     ],
     providers   : [
         RequiredCheckBoxValidator,
