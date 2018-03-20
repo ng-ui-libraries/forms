@@ -23,7 +23,7 @@ export class MatchValueValidator {
     constructor(messenger: ValidatorMessenger) {
         if (!messenger.messages.hasOwnProperty('matchValue')) {
             messenger.messages['matchValue'] = (result: ValidatorResults, key: string, label: string = '') => {
-                let message:string = <string>result['message'];
+                let message: string = <string>result['message'];
                 if (message.length > 0) {
                     return message;
                 }
@@ -36,7 +36,7 @@ export class MatchValueValidator {
         if (this.matchValue === null) {
             return null;
         }
-        return this.getStringValue(c) !== this.matchValue.value.toLowerCase() ? {
+        return this.getStringValue(c) !== this.matchValue.value ? {
             matchValue: {
                 expectedValue: this.matchValue.value,
                 matchLabel   : this.matchValue.label,
