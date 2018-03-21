@@ -43,7 +43,7 @@ import {NestedSearcher}        from '../../Service/Impl/NestedSearcher';
             </div>
             <div class="children-list" *ngIf="hasChildren() && shouldDisplay(item) && !isCollapsed()">
                 <ng-container *ngFor="let child of item.children">
-                    <nested-list [item]="child" [template]="template" [initialCollapse]="true"
+                    <nested-list [item]="child" [template]="template" [initialCollapse]="initialCollapse"
                                  [searcher]="searcher"
                                  [showLines]="showLines" [collapseButton]="collapseButton"
                                  [onCollapseAll]="onCollapseAll" [onExpandAll]="onExpandAll"
