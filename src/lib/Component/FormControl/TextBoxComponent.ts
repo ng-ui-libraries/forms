@@ -25,6 +25,8 @@ import {NgFormControl}                             from '../NgFormControl';
                            [placeholder]="placeholder || ''"
                            [id]="identifier"
                            [name]="name"
+                           [attr.role]="disableLastPass ? 'note' : ''"
+                           [attr.autocomplete]="disableLastPass ? 'off' : null"
                            [disabled]="disabled"
                            [(ngModel)]="value"
                            (blur)="triggerValidation()"
