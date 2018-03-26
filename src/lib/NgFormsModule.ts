@@ -88,5 +88,8 @@ export class NgFormsModule {
             }
             return true;
         });
+        $(document).on('focus', '.disable-autocomplete input', () => {
+            $(this).prop('autocomplete', 'off');
+        });
     }
 }

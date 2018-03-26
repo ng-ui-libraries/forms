@@ -23,6 +23,8 @@
         "@angular/router": "^5.2.9",
         "@ng-app-framework/core": "^1.1.21",
         "@ng-select/ng-select": "^0.24.1",
+        "@types/jquery": "^3.3.1",
+        "jquery": "^3.3.1",
         "ngx-bootstrap": "^2.0.3",
         "rxjs": "^5.5.7"
     },
@@ -63,6 +65,7 @@
             "name": "ng-ui-forms",
             "entryFile": "index.ts",
             "externals": {
+                "jquery": "jquery",
                 "rxjs/Rx": "rxjs",
                 "@ng-app-framework/core": "ng-app-core",
                 "@ng-select/ng-select": "ng-select",
