@@ -22,8 +22,8 @@
             ],
             "scripts"          : [
             ],
-            "environmentSource": "src/environment.ts",
             "environments"     : {
+                "source": "src/environment.ts",
                 "test"   : "src/environment.ts",
                 "dev"    : "src/environment.dev.ts",
                 "staging": "src/environment.ts",

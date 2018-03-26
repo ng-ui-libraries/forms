@@ -1,13 +1,11 @@
 import {
-    ViewEncapsulation, Component, Input, EventEmitter, OnDestroy, OnInit, ViewChild,
-    Injector, KeyValueDiffers, KeyValueDiffer, DoCheck, Output
-}                                                                   from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {DragAndDrop}                                                from '../../Service/Impl/DragAndDrop';
-import {NestedSearcher}                                             from '../../Service/Impl/NestedSearcher';
-import {Async, OnChange, Value}                                     from '@ng-app-framework/core';
-import {Observable}                                                 from 'rxjs/Rx';
-import {NgFormControl}                                              from '../NgFormControl';
+    ViewEncapsulation, Component, Input, OnDestroy, OnInit, Injector
+}                                                  from '@angular/core';
+import {FormControl, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {DragAndDrop}                               from '../../Service/Impl/DragAndDrop';
+import {NestedSearcher}                            from '../../Service/Impl/NestedSearcher';
+import {OnChange}                                  from '@ng-app-framework/core';
+import {NgFormControl}                             from '../NgFormControl';
 
 @Component({
     selector     : 'nested-field',

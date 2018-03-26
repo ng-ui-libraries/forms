@@ -15,21 +15,19 @@
         "package": "node --max-old-space-size=8192 `which ng-packagr` && cp -r ./public/ ./dist/public"
     },
     "private": false,
-    "dependencies": {
-        "@angular/animations": "^5.2.9",
-        "@angular/common": "^5.2.9",
-        "@angular/core": "^5.2.9",
-        "@angular/forms": "^5.2.9",
-        "@angular/router": "^5.2.9",
-        "@ng-app-framework/core": "^1.1.21",
-        "@ng-select/ng-select": "^0.24.1",
+    "devDependencies": {
         "@types/jquery": "^3.3.1",
         "jquery": "^3.3.1",
         "ngx-bootstrap": "^2.0.3",
         "rxjs": "^5.5.7",
-        "safe-pipe": "^0.3.0"
-    },
-    "devDependencies": {
+        "safe-pipe": "^0.3.0",
+        "@ng-app-framework/core": "^1.1.21",
+        "@ng-select/ng-select": "^0.24.1",
+        "@angular/core": "^5.2.9",
+        "@angular/forms": "^5.2.9",
+        "@angular/router": "^5.2.9",
+        "@angular/common": "^5.2.9",
+        "@angular/animations": "^5.2.9",
         "@angular/cli": "^1.7.3",
         "@angular/compiler": "^5.2.9",
         "@angular/compiler-cli": "^5.2.9",
@@ -52,7 +50,7 @@
         "karma-jasmine-html-reporter": "^0.2.2",
         "karma-remap-istanbul": "^0.6.0",
         "karma-spec-reporter": "0.0.26",
-        "ng-packagr": "^1.7.0",
+        "ng-packagr": "^2.4.1",
         "node-sass": "^4.8.3",
         "ts-node": "^1.2.1",
         "tslint": "^5.9.1",
@@ -66,6 +64,7 @@
             "name": "ng-ui-forms",
             "entryFile": "index.ts",
             "externals": {
+                "@angular/animations": "ng-animations",
                 "jquery": "jquery",
                 "rxjs/Rx": "rxjs",
                 "@ng-app-framework/core": "ng-app-core",

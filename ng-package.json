@@ -1,0 +1,14 @@
+{
+    "lib": {
+        "name": "ng-ui-forms",
+        "entryFile": "index.ts",
+        "externals": {
+            "jquery": "jquery",
+            "rxjs/Rx": "rxjs",
+            "@angular/animations": "ng-animations",
+            "@ng-app-framework/core": "ng-app-core",
+            "@ng-select/ng-select": "ng-select",
+            "ngx-bootstrap": "ngx-bootstrap"
+        }
+    }
+}
