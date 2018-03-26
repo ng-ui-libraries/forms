@@ -1,0 +1,12 @@
+<h4>Nested Field</h4>
+<h5>Example</h5>
+<div class="card card-body bg-light form-group">
+    <form #testForm="ngForm">
+        <nested-field [(ngModel)]="model.value" name="nested-field"></nested-field>
+        <submit-button label="Submit" [formGroup]="testForm.form"></submit-button>
+    </form>
+</div>
+<h5>Data Model</h5>
+<pre class="card card-body bg-light" >{{ model ? (model | json) : '' }}</pre>
+<h5>Markup</h5>
+<pre class="card card-body bg-light">{{ markup }}</pre>

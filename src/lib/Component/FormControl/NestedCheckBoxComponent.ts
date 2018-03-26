@@ -97,24 +97,6 @@ export class NestedCheckBoxComponent extends NgFormControl<any[]> implements OnI
         super(injector);
     }
 
-
-    initializeOption(list, parent = null) {
-        return Observable.from(list)
-                         .do((option: any) => {
-                             option.parent = parent;
-                             if (this.value && this.value.length > 0) {
-                                 this.selection[option[this.selectBy]] = this.value.indexOf(option[this.selectBy]) > -1;
-                             }
-                         })
-                         .flatMap((option: any) => {
-                             if (this.hasChildren(option)) {
-                                 return this.initializeOption(option.children, option);
-                             }
-                             return Observable.from([]);
-                         });
-
-    }
-
     ngOnInit() {
         super.ngOnInit();
         this.nestedList.children = this.options;
@@ -147,10 +129,10 @@ export class NestedCheckBoxComponent extends NgFormControl<any[]> implements OnI
     }
 
     private updateParents(item) {
-        if (item.parent) {
-            if (this.indeterminate[item.parent[this.selectBy]] && !this.indeterminate[item[this.selectBy]] && !this.selection[item[this.selectBy]]) {
-                this.indeterminate[item.parent[this.selectBy]] = null;
-                this.updateParents(item.parent);
+        if (item.$parent) {
+            if (this.indeterminate[item.$parent[this.selectBy]] && !this.indeterminate[item[this.selectBy]] && !this.selection[item[this.selectBy]]) {
+                this.indeterminate[item.$parent[this.selectBy]] = null;
+                this.updateParents(item.$parent);
             }
         }
     }

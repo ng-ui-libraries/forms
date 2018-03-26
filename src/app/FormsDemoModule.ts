@@ -2,13 +2,14 @@ import {Component, NgModule, ViewEncapsulation} from '@angular/core';
 import {RouterModule}                           from '@angular/router';
 import {CommonModule}                           from '@angular/common';
 import {NgFormsModule}                          from '../lib/NgFormsModule';
-import {ConfirmationDemoComponent}              from './Component/ConfirmationDemoComponent';
-import {FormsDemoComponent}                     from './Component/FormsDemoComponent';
-import {CheckBoxDemoComponent}                  from './Component/CheckBoxDemoComponent';
+import {ConfirmationDemoComponent}   from './Component/ConfirmationDemoComponent';
+import {FormsDemoComponent}          from './Component/FormsDemoComponent';
+import {CheckBoxDemoComponent}       from './Component/CheckBoxDemoComponent';
 import {EmailDemoComponent}          from './Component/EmailDemoComponent';
 import {DatePickerDemoComponent}     from './Component/DatePickerDemoComponent';
 import {DropDownDemoComponent}       from './Component/DropDownDemoComponent';
 import {IndexComponent}              from './Component/IndexComponent';
+import {NestedFieldDemoComponent}    from './Component/NestedFieldDemoComponent';
 import {NestedListDemoComponent}     from './Component/NestedListDemoComponent';
 import {NestedCheckBoxDemoComponent} from './Component/NestedCheckBoxDemoComponent';
 import {PhoneDemoComponent}          from './Component/PhoneDemoComponent';
@@ -50,6 +51,10 @@ export const routes = [
                 component: NestedListDemoComponent
             },
             {
+                path     : 'nested-field',
+                component: NestedFieldDemoComponent
+            },
+            {
                 path     : 'nested-check-box',
                 component: NestedCheckBoxDemoComponent
             },
@@ -82,7 +87,8 @@ export const routes = [
         EmailDemoComponent,
         TextBoxDemoComponent,
         RadioDemoComponent,
-        PhoneDemoComponent
+        PhoneDemoComponent,
+        NestedFieldDemoComponent
     ],
     imports     : [
         CommonModule,

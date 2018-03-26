@@ -1,13 +1,15 @@
-import {NgModule}                         from '@angular/core';
-import {DatePickerComponent}              from './Component/FormControl/DatePickerComponent';
-import {CheckBoxComponent}                from './Component/FormControl/CheckBoxComponent';
-import {NestedListComponent}              from './Component/FormControl/NestedListComponent';
-import {DropDownComponent}                from './Component/FormControl/DropDownComponent';
-import {NestedCheckBoxComponent}          from './Component/FormControl/NestedCheckBoxComponent';
+import {NgModule}                from '@angular/core';
+import {SafePipeModule}          from 'safe-pipe';
+import {DatePickerComponent}     from './Component/FormControl/DatePickerComponent';
+import {CheckBoxComponent}       from './Component/FormControl/CheckBoxComponent';
+import {NestedFieldComponent}    from './Component/FormControl/NestedFieldComponent';
+import {NestedListComponent}     from './Component/FormControl/NestedListComponent';
+import {DropDownComponent}       from './Component/FormControl/DropDownComponent';
+import {NestedCheckBoxComponent} from './Component/FormControl/NestedCheckBoxComponent';
 import {BsDatepickerModule}               from 'ngx-bootstrap';
 import {CommonModule}                     from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {BrowserAnimationsModule}     from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule}          from '@angular/platform-browser/animations';
 import {NgSelectModule}                  from '@ng-select/ng-select';
 import {EmailComponent}                  from './Component/FormControl/EmailComponent';
 import {PhoneComponent}                  from './Component/FormControl/PhoneComponent';
@@ -41,7 +43,8 @@ import {ValidatorMessenger}              from './Validation/Service/ValidatorMes
         RadioComponent,
         PhoneComponent,
         TabComponent,
-        Activatable
+        Activatable,
+        NestedFieldComponent
     ],
     imports     : [
         CommonModule,
@@ -49,7 +52,8 @@ import {ValidatorMessenger}              from './Validation/Service/ValidatorMes
         ReactiveFormsModule,
         BrowserAnimationsModule,
         NgSelectModule,
-        BsDatepickerModule.forRoot()
+        BsDatepickerModule.forRoot(),
+        SafePipeModule
     ],
     exports     : [
         CommonModule,
@@ -70,7 +74,8 @@ import {ValidatorMessenger}              from './Validation/Service/ValidatorMes
         TabComponent,
         Activatable,
         ValidationMessagesComponent,
-        FormValidationMessagesComponent
+        FormValidationMessagesComponent,
+        NestedFieldComponent
     ],
     providers   : [
         RequiredCheckBoxValidator,

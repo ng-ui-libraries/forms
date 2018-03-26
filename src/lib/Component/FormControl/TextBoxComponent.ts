@@ -39,7 +39,7 @@ import {NgFormControl}                             from '../NgFormControl';
                     />
                     <ng-content select=".input-group-append"></ng-content>
                 </div>
-                <validation-messages *ngIf="(isInvalid$() | async)" [errors]="failures" [label]="label">
+                <validation-messages *ngIf="(isInvalid$() | async) && showErrors" [errors]="failures" [label]="label">
                 </validation-messages>
             </div>
         </ng-container>
@@ -62,6 +62,7 @@ export class TextBoxComponent extends NgFormControl<string> {
     @Input() label: string               = '';
     @Input() placeholder: string         = null;
     @Input() shouldValidate              = true;
+    @Input() showErrors                  = true;
     @Output() click                      = new EventEmitter<any>();
     @Output() inputClick                 = new EventEmitter<any>();
     @Output() inputFocusOut              = new EventEmitter<any>();
@@ -98,6 +99,9 @@ export class TextBoxComponent extends NgFormControl<string> {
                           this.triggerValidation();
                       }
                   });
+        if (this.autofocus) {
+            this.input.nativeElement.focus();
+        }
     }
 
     protected triggerValidation() {

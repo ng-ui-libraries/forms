@@ -6,10 +6,12 @@ export class NestedSearcher extends Searcher {
 
     isUpdating = false;
 
+    forceClose = true;
+
     all = {};
 
     updateMatches(item) {
-        this.isUpdating = true;
+        //this.isUpdating = true;
         setTimeout(() => {
             this.initializeMetadata(item);
             this.updateChildrenForItem$(item, item).subscribe({
@@ -25,16 +27,22 @@ export class NestedSearcher extends Searcher {
     }
 
     initializeMetadata(item, parent?: any) {
-        if (!this.all.hasOwnProperty(item.id || item.constant)) {
-            this.all[item.id || item.constant] = item;
+        if (item) {
+            item.$id = item.$id || ++nestedId;
+            if (parent && !this.all.hasOwnProperty(parent.$id)) {
+                this.all[parent.$id] = parent;
+            }
+            if (!this.all.hasOwnProperty(item.$id)) {
+                this.all[item.$id] = item;
+            }
+            item.$parent        = parent ? parent.$id : null;
+            item.$parentMatches = item.$parentMatches || false;
+            item.$shown         = item.$parentMatches || !this.isTermLongEnough();
+            item.$matches       = false;
+            item.$childMatches  = false;
+            item.$matches       = this.isTermLongEnough() && this.doesItemMatchSearch(item);
+            item.$collapsed     = false;
         }
-        item.parent         = parent ? parent.id || parent.constant : null;
-        item.$parentMatches = item.$parentMatches || false;
-        item.$shown         = item.$parentMatches || !this.isTermLongEnough();
-        item.$matches       = false;
-        item.$childMatches  = false;
-        item.$matches       = this.isTermLongEnough() && this.doesItemMatchSearch(item);
-        item.$collapsed     = false;
     }
 
     updateChildrenForItem$(item, top) {
@@ -53,25 +61,29 @@ export class NestedSearcher extends Searcher {
                              .toArray()
                              .do((list) => {
                                  item.$shown     = !this.isTermLongEnough() || item.$childMatches || item.$parentMatches || item.$matches;
-                                 item.$collapsed = !this.isTermLongEnough() || item.$matches || !item.$childMatches;
+                                 if (this.forceClose) {
+                                     item.$collapsed = !this.isTermLongEnough() || item.$matches || !item.$childMatches;
+                                 }
                              });
         }
         item.$shown     = !this.isTermLongEnough() || item.$parentMatches || item.$matches;
-        item.$collapsed = true;
+        if (this.forceClose) {
+            item.$collapsed = true;
+        }
         return Observable.from([]);
     }
 
     updateParentChildMatches(item) {
-        if (item.parent) {
-            this.all[item.parent].$childMatches = true;
-            this.updateParentChildMatches(this.all[item.parent]);
+        if (item.$parent) {
+            this.all[item.$parent].$childMatches = true;
+            this.updateParentChildMatches(this.all[item.$parent]);
         }
     }
 
     doesParentMatchSearch$(item) {
-        if (item.parent) {
-            if (!this.doesItemMatchSearch(this.all[item.parent])) {
-                return this.doesParentMatchSearch$(this.all[item.parent]);
+        if (item.$parent) {
+            if (!this.doesItemMatchSearch(this.all[item.$parent])) {
+                return this.doesParentMatchSearch$(this.all[item.$parent]);
             }
             return Async.getObservableForValue$(true);
         }
@@ -101,4 +113,12 @@ export class NestedSearcher extends Searcher {
                     .toArray()
                     .map(arr => arr.indexOf(true) > -1);
     }
+
+    getParent(item) {
+        if (this.all.hasOwnProperty(item.$parent)) {
+            return this.all[item.$parent];
+        }
+    }
 }
+
+let nestedId = 0;
