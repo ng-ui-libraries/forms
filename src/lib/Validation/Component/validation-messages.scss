@@ -24,10 +24,15 @@
         bottom: 24px;
         box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);
         width: auto;
+        padding: 5px 10px;
         max-width:100%;
         animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
         transform: translate3d(0, 0, 0);
         cursor: pointer;
+        font-size: 0.8em;
+        @media (max-width:600px) {
+            font-size: 0.9em;
+        }
         &.dismissed {
             display:none;
         }
