@@ -33,7 +33,7 @@ export class ValidationMessagesComponent {
     }
 
     getMessage(key) {
-        return this.messenger.getMessageForError(this.errors, key, 'This');
+        return this.messenger.getMessageForError(this.errors, key, this.label);
     }
 
     getErrorMessages() {
