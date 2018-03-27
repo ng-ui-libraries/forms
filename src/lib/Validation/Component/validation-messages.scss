@@ -23,7 +23,8 @@
         position: absolute;
         bottom: 24px;
         box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);
-        width: 100%;
+        width: auto;
+        max-width:100%;
         animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
         transform: translate3d(0, 0, 0);
         cursor: pointer;
