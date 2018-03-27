@@ -7,6 +7,7 @@ import {NgFormControl}                                         from '../NgFormCo
 @Component({
     selector     : 'phone',
     templateUrl  : 'assets/phone.html',
+    styleUrls: ['../../Validation/Component/validation-messages.scss'],
     encapsulation: ViewEncapsulation.None,
     providers    : [{
         provide    : NG_VALUE_ACCESSOR,

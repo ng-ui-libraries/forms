@@ -1,49 +1,54 @@
 <div class="form-group validate-input">
-    <div class="alert alert-danger" *ngIf="control.invalid && control.touched">
-        <div>The {{label}} is not fully provided.</div>
-    </div>
+
     <label [for]="getFor()">{{label}}</label>
     <br/>
-    <div class="input-group ng-control" [class.ng-invalid]="control.invalid"
-         [class.ng-valid]="control.valid"
-         [class.ng-touched]="control.touched">
-        <div class="input-group-prepend">
-            <div class="input-group-text">
-                <span class="fa fa-phone"></span>
+    <div>
+        <div class="input-group ng-control" [class.ng-invalid]="control.invalid"
+             [class.ng-valid]="control.valid"
+             [class.ng-touched]="control.touched">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <span class="fa fa-phone"></span>
+                </div>
+            </div>
+            <input #part1 class="form-control" type="text" size="3" minlength="3" maxlength="3"
+                   [attr.id]="identifier + '-part1'"
+                   [(ngModel)]="phoneForm.part1"
+                   pattern="\d{3}"
+                   required
+                   (keyup)="onKeyUp($event, part1, part2)"
+                   (change)="format()"
+                   (blur)="format()"
+                   [name]="identifier + '-part1'"/>
+            <div class="input-group-append">
+                <span class="input-group-text">-</span>
+            </div>
+            <input #part2 class="form-control" type="text" size="3" minlength="3" maxlength="3"
+                   [attr.id]="identifier + '-part2'"
+                   [(ngModel)]="phoneForm.part2"
+                   pattern="\d{3}"
+                   required
+                   (keyup)="onKeyUp($event, part2, part3)"
+                   (change)="format()"
+                   (blur)="format()"
+                   [name]="identifier + '-part2'"/>
+            <div class="input-group-append">
+                <span class="input-group-text">-</span>
+            </div>
+            <input #part3 class="form-control" type="text" size="4" minlength="4" maxlength="4"
+                   [attr.id]="identifier + '-part3'"
+                   required
+                   [(ngModel)]="phoneForm.part3"
+                   pattern="\d{4}"
+                   (keyup)="format()"
+                   (change)="format()"
+                   (blur)="format()"
+                   [name]="identifier + '-part3'"/>
+        </div>
+        <div class="validation-messages-container">
+            <div class="alert alert-danger" *ngIf="control.invalid && control.touched">
+                <div>The {{label}} is not fully provided.</div>
             </div>
         </div>
-        <input #part1 class="form-control" type="text" size="3" minlength="3" maxlength="3"
-               [attr.id]="identifier + '-part1'"
-               [(ngModel)]="phoneForm.part1"
-               pattern="\d{3}"
-               required
-               (keyup)="onKeyUp($event, part1, part2)"
-               (change)="format()"
-               (blur)="format()"
-               [name]="identifier + '-part1'"/>
-        <div class="input-group-append">
-            <span class="input-group-text">-</span>
-        </div>
-        <input #part2 class="form-control" type="text" size="3" minlength="3" maxlength="3"
-               [attr.id]="identifier + '-part2'"
-               [(ngModel)]="phoneForm.part2"
-               pattern="\d{3}"
-               required
-               (keyup)="onKeyUp($event, part2, part3)"
-               (change)="format()"
-               (blur)="format()"
-               [name]="identifier + '-part2'"/>
-        <div class="input-group-append">
-            <span class="input-group-text">-</span>
-        </div>
-        <input #part3 class="form-control" type="text" size="4" minlength="4" maxlength="4"
-               [attr.id]="identifier + '-part3'"
-               required
-               [(ngModel)]="phoneForm.part3"
-               pattern="\d{4}"
-               (keyup)="format()"
-               (change)="format()"
-               (blur)="format()"
-               [name]="identifier + '-part3'"/>
     </div>
 </div>
