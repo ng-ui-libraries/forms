@@ -43,13 +43,13 @@ export class PhoneComponent extends NgFormControl<string> {
     }
 
     ngOnInit() {
+        super.ngOnInit();
         if (this.value && this.value.length > 0) {
             let phone            = this.value.replace(/[^\d\-]+/g, '').split('-');
             this.phoneForm.part1 = phone[0];
             this.phoneForm.part2 = phone[1] || '';
             this.phoneForm.part3 = phone[2] || '';
         }
-        super.ngOnInit();
     }
 
     getFor() {
