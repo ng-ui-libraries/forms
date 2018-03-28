@@ -49,6 +49,7 @@ export class PhoneComponent extends NgFormControl<string> {
             this.phoneForm.part2 = phone[1] || '';
             this.phoneForm.part3 = phone[2] || '';
         }
+        super.ngOnInit();
     }
 
     getFor() {
