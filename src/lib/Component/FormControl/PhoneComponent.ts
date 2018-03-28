@@ -1,4 +1,4 @@
-import {Component, Injector, Input, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, Injector, Input, ViewEncapsulation} from '@angular/core';
 
 import {FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators} from '@angular/forms';
 import {NgFormControl}                                         from '../NgFormControl';
@@ -42,8 +42,7 @@ export class PhoneComponent extends NgFormControl<string> {
         super(injector);
     }
 
-    ngOnInit() {
-        super.ngOnInit();
+    onLoad() {
         if (this.value && this.value.length > 0) {
             let phone            = this.value.replace(/[^\d\-]+/g, '').split('-');
             this.phoneForm.part1 = phone[0];

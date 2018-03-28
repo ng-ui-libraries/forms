@@ -11,7 +11,7 @@ export class PhoneDemoComponent {
         id         : 'phoneField',
         name       : 'phoneField',
         required   : false,
-        value      : ''
+        value      : '111-222-3333'
     };
 
     markup = `
