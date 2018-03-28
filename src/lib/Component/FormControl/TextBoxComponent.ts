@@ -24,6 +24,7 @@ import {NgFormControl}                             from '../NgFormControl';
                            (focus)="inputFocus.emit()"
                            [placeholder]="placeholder || ''"
                            [id]="identifier"
+                           [attr.name]="name"
                            [name]="name"
                            [attr.role]="disableLastPass ? 'note' : ''"
                            [attr.autocomplete]="disableLastPass ? 'off' : null"

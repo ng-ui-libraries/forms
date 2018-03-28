@@ -19,6 +19,7 @@
                    (keyup)="onKeyUp($event, part1, part2)"
                    (change)="format()"
                    (blur)="format()"
+                   [attr.name]="identifier + '-part1'"
                    [name]="identifier + '-part1'"/>
             <div class="input-group-append">
                 <span class="input-group-text">-</span>
@@ -31,6 +32,7 @@
                    (keyup)="onKeyUp($event, part2, part3)"
                    (change)="format()"
                    (blur)="format()"
+                   [attr.name]="identifier + '-part2'"
                    [name]="identifier + '-part2'"/>
             <div class="input-group-append">
                 <span class="input-group-text">-</span>
@@ -43,6 +45,7 @@
                    (keyup)="format()"
                    (change)="format()"
                    (blur)="format()"
+                   [attr.name]="identifier + '-part3'"
                    [name]="identifier + '-part3'"/>
         </div>
         <div class="validation-messages-container">

@@ -36,6 +36,7 @@ import {NgFormControl}                             from '../NgFormControl';
                            [placeholder]="placeholder || ''"
                            [id]="identifier"
                            [name]="name"
+                           [attr.name]="name"
                            [disabled]="disabled"
                            [(ngModel)]="value"
                            #input

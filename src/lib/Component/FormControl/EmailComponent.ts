@@ -29,6 +29,7 @@ import {TextBoxComponent}                                                       
                            [id]="identifier"
                            [disabled]="disabled"
                            [name]="name"
+                           [attr.name]="name"
                            [(ngModel)]="value"
                            (blur)="triggerValidation()"
                            tabindex="0"

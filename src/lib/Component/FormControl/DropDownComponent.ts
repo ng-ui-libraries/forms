@@ -26,7 +26,7 @@ import {NgFormControl}                             from '../NgFormControl';
                             <span class="fa fa-{{icon}}"></span>
                         </div>
                     </div>
-                    <input class="form-control" readonly disabled *ngIf="disabled" [ngModel]="getReadOnlyValue()" [name]="name"/>
+                    <input class="form-control" readonly disabled *ngIf="disabled" [ngModel]="getReadOnlyValue()" [name]="name" [attr.name]="name"/>
                     <ng-select
                             *ngIf="!disabled"
                             [items]="options"

@@ -30,6 +30,7 @@ import {NgFormControl} from '../NgFormControl';
                          [class.input-group-prepend]="labelPlacement === 'before'" [class.input-group-append]="labelPlacement === 'after'">
                         <div class="input-group-text">
                             <input readonly type="radio"
+                                   [attr.name]="name"
                                    [id]="identifier"
                                    [disabled]="disabled"
                                    [checked]="value === checkedValue"
