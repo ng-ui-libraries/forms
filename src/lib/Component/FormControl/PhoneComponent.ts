@@ -7,7 +7,7 @@ import {NgFormControl}                                         from '../NgFormCo
 @Component({
     selector     : 'phone',
     templateUrl  : 'assets/phone.html',
-    styleUrls: ['../../Validation/Component/validation-messages.scss'],
+    styleUrls    : ['../../Validation/Component/validation-messages.scss'],
     encapsulation: ViewEncapsulation.None,
     providers    : [{
         provide    : NG_VALUE_ACCESSOR,
@@ -40,6 +40,15 @@ export class PhoneComponent extends NgFormControl<string> {
 
     constructor(public injector: Injector) {
         super(injector);
+    }
+
+    ngOnInit() {
+        if (this.value.length > 0) {
+            let phone            = this.value.replace(/[^\d\-]+/g, '').split('-');
+            this.phoneForm.part1 = phone[0];
+            this.phoneForm.part2 = phone[1];
+            this.phoneForm.part3 = phone[2];
+        }
     }
 
     getFor() {
