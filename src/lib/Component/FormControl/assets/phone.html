@@ -2,7 +2,7 @@
 
     <label [for]="getFor()">{{label}}</label>
     <br/>
-    <div>
+    <div *ngIf="control">
         <div class="input-group ng-control" [class.ng-invalid]="control.invalid"
              [class.ng-valid]="control.valid"
              [class.ng-touched]="control.touched">
@@ -49,7 +49,7 @@
                    [name]="identifier + '-part3'"/>
         </div>
         <div class="validation-messages-container">
-            <div class="alert alert-danger" *ngIf="control.invalid && control.touched">
+            <div class="alert alert-danger" *ngIf="control && control.invalid && control.touched">
                 <div>The {{label}} is not fully provided.</div>
             </div>
         </div>
