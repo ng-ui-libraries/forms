@@ -113,6 +113,7 @@ export class NestedCheckBoxComponent extends NgFormControl<any[]> implements OnI
 
     click(item) {
         this.selection[item[this.selectBy]] = this.selection[item[this.selectBy]] || this.indeterminate[item[this.selectBy]] ? null : item[this.selectBy];
+        this.updateSelected();
         this.updateThreeState(item);
         this.updateChildren$(item)
             .toArray().subscribe({
@@ -123,9 +124,14 @@ export class NestedCheckBoxComponent extends NgFormControl<any[]> implements OnI
             },
             complete: () => {
                 this.updateParents(item);
+                this.updateSelected();
                 this.control.markAsTouched();
             }
         });
+    }
+
+    updateSelected() {
+        this.value = Object.keys(this.selection).map((key) => this.selection[key]).filter((value) => Boolean(value));
     }
 
     private updateParents(item) {
