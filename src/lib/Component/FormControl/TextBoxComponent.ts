@@ -27,7 +27,7 @@ import {NgFormControl}                             from '../NgFormControl';
                            [attr.name]="name"
                            [name]="name"
                            [attr.role]="disableLastPass ? 'note' : ''"
-                           [attr.autocomplete]="disableLastPass ? 'off' : null"
+                           [attr.autocomplete]="autocomplete ? autocomplete : disableLastPass ? 'off' : name"
                            [disabled]="disabled"
                            [(ngModel)]="value"
                            (blur)="triggerValidation()"
@@ -64,6 +64,7 @@ export class TextBoxComponent extends NgFormControl<string> {
     @Input() placeholder: string         = null;
     @Input() shouldValidate              = true;
     @Input() showErrors                  = true;
+    @Input() autocomplete                = null;
     @Output() click                      = new EventEmitter<any>();
     @Output() inputClick                 = new EventEmitter<any>();
     @Output() inputFocusOut              = new EventEmitter<any>();
