@@ -13,20 +13,21 @@ import {NgFormControl}                             from '../NgFormControl';
             <ng-template #defaultOption let-item>
                 {{ item[labelField] }}
             </ng-template>
-            <div class="form-group" [class.validate-input]="shouldValidate" [class.no-validate-input]="!shouldValidate">
-                <label [attr.for]="identifier">
+            <div [class.form-group]="!inInputGroup" [class.validate-input]="shouldValidate" [class.no-validate-input]="!shouldValidate">
+                <label [attr.for]="identifier" *ngIf="label.length > 0">
                     {{ label }}
                     <ng-container *ngIf="required">*</ng-container>
                 </label>
                 <div></div>
-                <div class="input-group ng-control" [class.disabled]="disabled"
+                <div class="ng-control" [class.input-group]="!inInputGroup" [class.disabled]="disabled"
                      [ngClass]="{'ng-invalid':(isInvalid$() | async), 'ng-touched':(touched$ | async), 'ng-valid':!(isInvalid$() | async) && (touched$ | async)}">
                     <div class="input-group-prepend" *ngIf="isIconProvided() && isIconPlacementBefore()">
                         <div class="input-group-text">
                             <span class="fa fa-{{icon}}"></span>
                         </div>
                     </div>
-                    <input class="form-control" readonly disabled *ngIf="disabled" [ngModel]="getReadOnlyValue()" [name]="name" [attr.name]="name"/>
+                    <input class="form-control" readonly disabled *ngIf="disabled" [ngModel]="getReadOnlyValue()" [name]="name"
+                           [attr.name]="name"/>
                     <ng-select
                             *ngIf="!disabled"
                             [items]="options"
@@ -96,6 +97,7 @@ export class DropDownComponent extends NgFormControl<any> implements OnInit, OnD
         }
     }
 
+    @Input() inInputGroup                                    = false;
     @Input() name: string                                    = '';
     @Input() label: string                                   = '';
     @Input() appendTo: string                                = '';
