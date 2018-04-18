@@ -5,6 +5,7 @@ import {
 import {NG_VALUE_ACCESSOR, FormControl, FormGroup} from '@angular/forms';
 import {OnChange}                                  from '@ng-app-framework/core';
 import {Observable}                                from 'rxjs/Rx';
+import {FormConfig}                                from '../../Service/FormConfig';
 import {NgFormControl}                             from '../NgFormControl';
 
 @Component({
@@ -14,7 +15,7 @@ import {NgFormControl}                             from '../NgFormControl';
             <div class="form-group" [class.validate-input]="shouldValidate" [class.no-validate-input]="!shouldValidate">
                 <label [attr.for]="identifier" *ngIf="label.length > 0">
                     {{label}}
-                    <ng-container *ngIf="required">*</ng-container>
+                    <ng-container *ngIf="required && config.showRequiredAsterisk">*</ng-container>
                 </label>
                 <div></div>
                 <div class="input-group ng-control" (click)="click.emit()"
@@ -85,7 +86,7 @@ export class TextBoxComponent extends NgFormControl<string> {
 
     protected identifier = `text-box-${identifier++}`;
 
-    constructor(public injector: Injector) {
+    constructor(public injector: Injector, public config: FormConfig) {
         super(injector);
     }
 

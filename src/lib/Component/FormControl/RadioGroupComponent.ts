@@ -1,13 +1,14 @@
 import {
     ViewEncapsulation, Component, Input, EventEmitter, ViewChild, OnInit, OnDestroy,
     Inject, Injector
-} from '@angular/core';
+}                      from '@angular/core';
 import {
     FormControl,
     FormGroup,
     NG_VALUE_ACCESSOR, RequiredValidator
-} from "@angular/forms";
-import {OnChange} from "@ng-app-framework/core";
+}                      from "@angular/forms";
+import {OnChange}      from "@ng-app-framework/core";
+import {FormConfig}    from '../../Service/FormConfig';
 import {NgFormControl} from "../NgFormControl";
 
 
@@ -18,7 +19,7 @@ import {NgFormControl} from "../NgFormControl";
             <div class="form-group">
                 <label>
                     {{ label }}
-                    <span *ngIf="required">*</span>
+                    <span *ngIf="required && config.showRequiredAsterisk">*</span>
                 </label>
                 <div></div>
                 <div class="radio-controls" [class.d-flex]="direction === 'horizontal'">
@@ -66,7 +67,7 @@ export class RadioGroupComponent extends NgFormControl<any> implements OnInit, O
 
     identifier = `radio-group-${identifier++}`;
 
-    constructor(@Inject(Injector) public injector: Injector) {
+    constructor(@Inject(Injector) public injector: Injector, public config: FormConfig) {
         super(injector);
     }
 

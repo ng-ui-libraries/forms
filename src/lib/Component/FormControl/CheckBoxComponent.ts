@@ -9,6 +9,7 @@ import {
 }                                  from '@angular/forms';
 import {OnChange}                  from '@ng-app-framework/core';
 import {Observable}                from 'rxjs/Rx';
+import {FormConfig}                from '../../Service/FormConfig';
 import {NgFormControl}             from '../NgFormControl';
 import {RequiredCheckBoxValidator} from '../../Validation/Directive/RequiredCheckBoxValidator';
 
@@ -20,7 +21,7 @@ import {RequiredCheckBoxValidator} from '../../Validation/Directive/RequiredChec
             <div class="form-group" [class.validate-input]="shouldValidate" [class.no-validate-input]="!shouldValidate" [class.checked]="value">
                 <label *ngIf="labelPlacement === 'above'" for="{{identifier}}">
                     {{ label }}
-                    <span *ngIf="required">*</span>
+                    <span *ngIf="required && config.showRequiredAsterisk">*</span>
                 </label>
                 <div></div>
                 <div (click)="nextState()" (keyup.enter)="nextState()" (keyup.space)="nextState()" class="input-group check-container ng-control"
@@ -30,7 +31,7 @@ import {RequiredCheckBoxValidator} from '../../Validation/Directive/RequiredChec
                     <div class="form-control" *ngIf="labelPlacement === 'before'">
                         <label>
                             {{ label }}
-                            <span *ngIf="required">*</span>
+                            <span *ngIf="required && config.showRequiredAsterisk">*</span>
                         </label>
                     </div>
                     <div [class.input-group-prepend]="labelPlacement === 'before'" [class.input-group-append]="labelPlacement === 'after'">
@@ -45,7 +46,7 @@ import {RequiredCheckBoxValidator} from '../../Validation/Directive/RequiredChec
                     <div class="form-control" *ngIf="labelPlacement === 'after'">
                         <label>
                             {{ label }}
-                            <span *ngIf="required">*</span>
+                            <span *ngIf="required && config.showRequiredAsterisk">*</span>
                         </label>
                     </div>
                 </div>
@@ -92,7 +93,7 @@ export class CheckBoxComponent extends NgFormControl<any> implements OnInit, OnD
 
     requiredValidator: RequiredValidator = new RequiredCheckBoxValidator();
 
-    constructor(@Inject(Injector) public injector: Injector) {
+    constructor(@Inject(Injector) public injector: Injector, public config: FormConfig) {
         super(injector);
         this.additionalValidators = [this.requiredValidator];
     }

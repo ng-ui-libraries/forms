@@ -1,7 +1,8 @@
-import {TestBed} from "@angular/core/testing";
-import {NO_ERRORS_SCHEMA} from "@angular/core";
+import {TestBed}           from "@angular/core/testing";
+import {NO_ERRORS_SCHEMA}  from "@angular/core";
 import {CheckBoxComponent} from "../../src/lib/Component/FormControl/CheckBoxComponent";
-import {CommonModule} from "@angular/common";
+import {CommonModule}      from "@angular/common";
+import {FormConfig}        from '../../src/lib/Service/FormConfig';
 
 describe('Module: Form', () => {
     describe('Component: CheckBoxComponent', () => {
@@ -12,6 +13,7 @@ describe('Module: Form', () => {
             TestBed
                 .configureTestingModule({
                     imports     : [CommonModule],
+                    providers: [FormConfig],
                     declarations: [CheckBoxComponent],
                     // Tells the compiler not to error on unknown elements and attributes
                     schemas     : [NO_ERRORS_SCHEMA]

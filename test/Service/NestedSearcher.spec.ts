@@ -83,7 +83,8 @@ describe('Module: Form', () => {
                 });
                 it('should return true if a parent matches', (done) => {
                     service.shouldBeFound = true;
-                    service.doesParentMatchSearch$({parent: {}}).subscribe((value) => {
+                    service.all[1] = {};
+                    service.doesParentMatchSearch$({$parent: 1}).subscribe((value) => {
                         expect(value).toBeTruthy();
                         done();
                     });

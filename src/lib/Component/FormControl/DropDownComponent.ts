@@ -4,6 +4,7 @@ import {
 }                                                  from '@angular/core';
 import {FormControl, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Value}                                     from '@ng-app-framework/core';
+import {FormConfig}                                from '../../Service/FormConfig';
 import {NgFormControl}                             from '../NgFormControl';
 
 @Component({
@@ -16,7 +17,7 @@ import {NgFormControl}                             from '../NgFormControl';
             <div [class.form-group]="!inInputGroup" [class.validate-input]="shouldValidate" [class.no-validate-input]="!shouldValidate">
                 <label [attr.for]="identifier" *ngIf="label.length > 0">
                     {{ label }}
-                    <ng-container *ngIf="required">*</ng-container>
+                    <ng-container *ngIf="required && config.showRequiredAsterisk">*</ng-container>
                 </label>
                 <div></div>
                 <div class="ng-control" [class.input-group]="!inInputGroup" [class.disabled]="disabled"
@@ -120,7 +121,7 @@ export class DropDownComponent extends NgFormControl<any> implements OnInit, OnD
     identifier = `option-list-${identifier++}`;
 
 
-    constructor(@Inject(Injector) public injector: Injector) {
+    constructor(@Inject(Injector) public injector: Injector, public config: FormConfig) {
         super(injector);
     }
 

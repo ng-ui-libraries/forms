@@ -11,6 +11,7 @@ import {FormControl, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {SiteConfig, Value}                         from '@ng-app-framework/core';
 import {BsDatepickerDirective}                     from 'ngx-bootstrap/datepicker';
 import {Observable}                                from 'rxjs/Rx';
+import {FormConfig}                                from '../../Service/FormConfig';
 import {NgFormControl}                             from '../NgFormControl';
 
 
@@ -22,7 +23,7 @@ import {NgFormControl}                             from '../NgFormControl';
                  [hidden]="!initialized">
                 <label [attr.for]="identifier" *ngIf="label.length > 0">
                     {{label}}
-                    <ng-container *ngIf="required">*</ng-container>
+                    <ng-container *ngIf="required && config.showRequiredAsterisk">*</ng-container>
                 </label>
                 <div></div>
                 <div class="input-group ng-control"
@@ -87,7 +88,7 @@ export class DatePickerComponent extends NgFormControl<string> {
     @ViewChild('input') input: ElementRef;
     @ViewChild('dp') datePicker: BsDatepickerDirective;
 
-    constructor(@Inject(Injector) public injector: Injector) {
+    constructor(@Inject(Injector) public injector: Injector, public config: FormConfig) {
         super(injector);
     }
 
