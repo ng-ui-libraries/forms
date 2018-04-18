@@ -47,7 +47,7 @@ import {NgFormControl}                             from '../NgFormControl';
                            #dp="bsDatepicker"
                            [triggers]="''"
                            [placement]="placement"
-                           [bsConfig]="{containerClass: theme,weeks:false}"
+                           [bsConfig]="{containerClass: theme,showWeekNumbers:false}"
                            [minDate]="minDate"
                            [maxDate]="maxDate"
                            (blur)="triggerValidation()"
