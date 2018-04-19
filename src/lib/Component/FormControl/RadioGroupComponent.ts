@@ -6,38 +6,36 @@ import {
     FormControl,
     FormGroup,
     NG_VALUE_ACCESSOR, RequiredValidator
-}                      from "@angular/forms";
-import {OnChange}      from "@ng-app-framework/core";
+}                      from '@angular/forms';
+import {OnChange}      from '@ng-app-framework/core';
 import {FormConfig}    from '../../Service/FormConfig';
-import {NgFormControl} from "../NgFormControl";
+import {NgFormControl} from '../NgFormControl';
 
 
 @Component({
     selector     : 'radio-group',
     template     : `
-        <ng-container *ngIf="initialized">
-            <div class="form-group">
-                <label>
-                    {{ label }}
-                    <span *ngIf="required && config.showRequiredAsterisk">*</span>
-                </label>
-                <div></div>
-                <div class="radio-controls" [class.d-flex]="direction === 'horizontal'">
-                    <ng-container *ngFor="let option of options">
-                        <radio [name]="name"
-                               [label]="option[bindLabel]"
-                               [(ngModel)]="value"
-                               [checkedValue]="option[bindValue]"
-                               [parentFormControl]="control"
-                               (ngModelChange)="triggerValidation()"
-                               (onTouch)="control.markAsTouched()"
-                               tabindex="0"></radio>
-                    </ng-container>
-                </div>
-                <validation-messages *ngIf="(isInvalid$() | async)" [errors]="failures" [label]="label">
-                </validation-messages>
+        <div class="form-group">
+            <label>
+                {{ label }}
+                <span *ngIf="required && config.showRequiredAsterisk">*</span>
+            </label>
+            <div></div>
+            <div class="radio-controls" [class.d-flex]="direction === 'horizontal'">
+                <ng-container *ngFor="let option of options">
+                    <radio [name]="name"
+                           [label]="option[bindLabel]"
+                           [(ngModel)]="value"
+                           [checkedValue]="option[bindValue]"
+                           [parentFormControl]="control"
+                           (ngModelChange)="triggerValidation()"
+                           (onTouch)="control.markAsTouched()"
+                           tabindex="0"></radio>
+                </ng-container>
             </div>
-        </ng-container>
+            <validation-messages *ngIf="(isInvalid$() | async)" [errors]="failures" [label]="label">
+            </validation-messages>
+        </div>
     `,
     styleUrls    : ['./assets/check-box.scss'],
     providers    : [
